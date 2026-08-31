@@ -1,0 +1,281 @@
+// PF-001 · Estilos propios de esta pantalla.
+
+.hero-catalogo {
+  color: #ffffff;
+  padding: 64px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-catalogo__degradado {
+  background: linear-gradient(90deg, rgba(11, 23, 40, 0.9) 0%, rgba(11, 23, 40, 0.62) 55%, rgba(11, 23, 40, 0.2) 100%);
+}
+.hero-catalogo__flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(16, 24, 40, 0.35);
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 3;
+}
+.hero-catalogo__flecha--anterior { left: 20px; }
+.hero-catalogo__flecha--siguiente { right: 20px; }
+.hero-catalogo__contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.hero-catalogo__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(200, 62, 77, 0.28);
+  border: 1px solid rgba(200, 62, 77, 0.6);
+  color: #fff1f3;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+.hero-catalogo__titulo {
+  margin: 20px 0 12px;
+  max-width: 760px;
+}
+.hero-catalogo__texto {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--acento-100);
+  max-width: 580px;
+  margin: 0 0 32px;
+}
+.hero-catalogo__buscador {
+  display: flex;
+  gap: 12px;
+  max-width: 640px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+
+  .input { flex: 1 1 280px; }
+}
+.hero-catalogo__puntos {
+  display: flex;
+  gap: 8px;
+}
+.hero-catalogo__punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .hero-catalogo { padding: 40px 20px; }
+  .hero-catalogo__flecha { display: none; }
+}
+
+.catalogo-filtros {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.catalogo-filtro {
+  flex: 0 1 240px;
+  min-width: 200px;
+}
+.catalogo-filtro--ancho { flex-basis: 280px; }
+.catalogo-select {
+  width: 100%;
+  height: 44px;
+  border-radius: var(--radio-md);
+  border: 1px solid var(--input-borde);
+  background: var(--blanco);
+  padding: 0 10px;
+  font-size: 14px;
+}
+.catalogo-resultados-cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--neutral-200);
+}
+.catalogo-resultados-conteo {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-500);
+}
+.catalogo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 24px;
+}
+
+.tarjeta-curso {
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.tarjeta-curso__imagen {
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px;
+  gap: 8px;
+}
+.tarjeta-curso__info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.tarjeta-curso__categoria {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--rojo-marca-600);
+}
+.tarjeta-curso__nombre {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--neutral-950);
+  margin: 0;
+}
+.tarjeta-curso__docentes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tarjeta-curso__docentes-nombres {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+}
+.tarjeta-curso__avatares { display: flex; }
+.tarjeta-curso__avatar { border: 2px solid #fff; }
+.tarjeta-curso__avatar--superpuesto { margin-left: -8px; }
+.tarjeta-curso__horas {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+}
+.tarjeta-curso__pie {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tarjeta-curso__precio-antes {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-500);
+  text-decoration: line-through;
+}
+.tarjeta-curso__precio {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--neutral-950);
+}
+.tarjeta-curso__boton { margin-top: 16px; }
+
+.catalogo-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 40px;
+}
+.catalogo-paginacion__pagina {
+  height: 44px;
+  min-width: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--radio-md);
+  font-size: 14px;
+  font-weight: 600;
+}
+.catalogo-paginacion__pagina--activa {
+  background: var(--marca-900);
+  color: #fff;
+}
+.catalogo-paginacion__pagina--inactiva {
+  border: 1px solid var(--neutral-300);
+  background: #fff;
+  color: var(--neutral-800);
+}
+
+.catalogo-vacio-icono {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radio-md);
+  background: var(--neutral-100);
+  margin: 0 auto 20px;
+}
+
+.catalogo-porque {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+.catalogo-porque__cabecera {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 32px;
+}
+.catalogo-porque__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 20px;
+}
+.catalogo-porque__item {
+  text-align: center;
+  padding: 8px;
+}
+.catalogo-porque__icono {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radio-lg);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+}
+.catalogo-porque__icono--acento { background: var(--acento-100); color: var(--marca-900); }
+.catalogo-porque__icono--violeta { background: var(--violeta-050); color: var(--violeta-700); }
+.catalogo-porque__icono--coral { background: var(--coral-050); color: var(--marca-900); }
+.catalogo-porque__icono--rojo { background: var(--rojo-marca-050); color: var(--rojo-marca-600); }
+.catalogo-porque__titulo {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--neutral-950);
+  margin: 0 0 4px;
+}
+.catalogo-porque__texto {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+  margin: 0;
+}

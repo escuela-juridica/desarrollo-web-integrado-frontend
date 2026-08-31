@@ -1,0 +1,80 @@
+<!-- Encabezado y pie del área del alumno (EP01: PF-008 y PF-009). Mockup fiel al prototipo. -->
+<header>
+  <div class="header-fila">
+    <a routerLink="/app/panel"><img src="img/logo-esejur.png" alt="Escuela Jurídica" class="header-logo" /></a>
+    <nav class="header-nav">
+      <a routerLink="/app/panel" routerLinkActive="nav-enlace--activo" class="nav-enlace">Mis cursos</a>
+      <!-- Calendario y Mis certificados pertenecen a EP03/EP04: fuera del alcance de este mockup -->
+      <span class="header-nav__deshabilitado">Calendario</span>
+      <span class="header-nav__deshabilitado">Mis certificados</span>
+      <a routerLink="/app/perfil" routerLinkActive="nav-enlace--activo" class="nav-enlace">Mi perfil</a>
+    </nav>
+    <div class="header-derecha">
+      <button
+        type="button"
+        class="header-hamburguesa"
+        aria-label="Abrir menú"
+        aria-haspopup="true"
+        [attr.aria-expanded]="menuMovilAbierto()"
+        (click)="toggleMenuMovil()"
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+      <div class="header-cuenta">
+        <button
+          type="button"
+          class="avatar avatar--md avatar--cuenta"
+          style="padding: 0"
+          aria-haspopup="true"
+          [attr.aria-expanded]="menuCuentaAbierto()"
+          (click)="toggleMenuCuenta()"
+        >
+          {{ usuario()?.nombre ? usuario()!.nombre.slice(0, 2).toUpperCase() : 'LC' }}
+        </button>
+        @if (menuCuentaAbierto()) {
+          <div class="menu-cuenta">
+            <div class="menu-cuenta__cabecera">
+              <span class="avatar avatar--sm avatar--cuenta" style="flex: 0 0 36px">{{ usuario()?.nombre ? usuario()!.nombre.slice(0, 2).toUpperCase() : 'LC' }}</span>
+              <div class="menu-cuenta__avatar-info">
+                <div class="menu-cuenta__nombre">{{ usuario()?.nombre || 'Lucía Caminos' }}</div>
+                <div class="menu-cuenta__correo">{{ usuario()?.email || 'lucia.caminos@esejur.pe' }}</div>
+              </div>
+            </div>
+            <div class="menu-cuenta__acciones">
+              <a routerLink="/app/perfil" (click)="cerrarMenuCuenta()" class="menu-cuenta__item">Mi perfil</a>
+              <button type="button" (click)="cerrarSesion()" class="menu-cuenta__item">Cerrar sesión</button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  @if (menuMovilAbierto()) {
+    <nav class="menu-movil">
+      <a routerLink="/app/panel" routerLinkActive="menu-movil__item--activo" class="menu-movil__item" (click)="cerrarMenuMovil()">Mis cursos</a>
+      <!-- Calendario y Mis certificados pertenecen a EP03/EP04: fuera del alcance de este mockup -->
+      <span class="menu-movil__item menu-movil__item--deshabilitado">Calendario</span>
+      <span class="menu-movil__item menu-movil__item--deshabilitado">Mis certificados</span>
+      <a routerLink="/app/perfil" routerLinkActive="menu-movil__item--activo" class="menu-movil__item" (click)="cerrarMenuMovil()">Mi perfil</a>
+    </nav>
+  }
+</header>
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="layout-alumno-footer">
+  <div class="layout-alumno-footer__fila">
+    <span>© Escuela Jurídica · 2026</span>
+    <div class="layout-alumno-footer__enlaces">
+      <a routerLink="/terminos">Términos del servicio</a>
+      <a routerLink="/privacidad">Política de privacidad</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,276 @@
+<!-- PF-001 · Inicio y catálogo (HU-006). Mockup fiel al prototipo, sin funcionalidad. -->
+
+<!-- Hero -->
+<div class="hero-catalogo">
+  <swiper-container #heroSwiper init="false" class="hero-media">
+    @for (img of heroImgs; track img) {
+      <swiper-slide>
+        <div class="hero-media__imagen" [style.background-image]="'url(' + img + ')'"></div>
+      </swiper-slide>
+    }
+  </swiper-container>
+  <div class="hero-overlay hero-catalogo__degradado"></div>
+
+  <button type="button" class="hero-catalogo__flecha hero-catalogo__flecha--anterior" aria-label="Foto anterior" (click)="heroPrev()">‹</button>
+  <button type="button" class="hero-catalogo__flecha hero-catalogo__flecha--siguiente" aria-label="Foto siguiente" (click)="heroNext()">›</button>
+
+  <div class="hero-catalogo__contenido">
+    <div class="hero-catalogo__etiqueta">Formación jurídica especializada</div>
+    <h1 class="tipo-display hero-catalogo__titulo">Especialízate con quienes ejercen el derecho todos los días</h1>
+    <p class="hero-catalogo__texto">
+      Diplomados y cursos con certificado verificable en línea, dictados por registradores, procuradores y
+      magistrados en ejercicio.
+    </p>
+    <div class="hero-catalogo__buscador">
+      <input class="input" placeholder="Busca por título o descripción del curso" />
+      <button type="button" class="btn btn--grande btn--acento">Buscar</button>
+    </div>
+    <div class="hero-catalogo__puntos">
+      @for (img of heroImgs; track img; let i = $index) {
+        <span
+          (click)="heroIrA(i)"
+          [style.background]="i === heroIndexActivo() ? '#ffffff' : 'rgba(255, 255, 255, 0.4)'"
+          class="hero-catalogo__punto"
+        ></span>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Filtros y grilla -->
+<div class="contenedor">
+  <div class="catalogo-filtros">
+    <div class="catalogo-filtro">
+      <label class="label">Tipo de curso</label>
+      <select class="catalogo-select">
+        <option>Todos</option>
+        <option>Diplomado</option>
+        <option>Especialización</option>
+        <option>Curso</option>
+        <option>Actualización</option>
+      </select>
+    </div>
+    <div class="catalogo-filtro catalogo-filtro--ancho">
+      <label class="label">Categoría temática</label>
+      <select class="catalogo-select">
+        <option>Todos</option>
+        <option>Derecho Registral</option>
+        <option>Contrataciones del Estado</option>
+        <option>Derecho Penal</option>
+        <option>Derecho Laboral</option>
+        <option>Derecho Tributario</option>
+        <option>Derecho Administrativo</option>
+        <option>Litigación</option>
+        <option>Arbitraje</option>
+        <option>Gestión Pública</option>
+      </select>
+    </div>
+    <button type="button" class="btn btn--secundario">Limpiar todo</button>
+  </div>
+
+  <div class="catalogo-resultados-cabecera">
+    <h2 class="tipo-h2" style="color: var(--neutral-950); margin: 0">Todos los cursos</h2>
+    <span class="catalogo-resultados-conteo">9 cursos</span>
+  </div>
+
+  <div class="catalogo-grid">
+    <!-- Tarjeta 1 · Diplomado en Derecho Registral y Notarial (destacado, virtual, inicio inmediato) -->
+    <article class="card tarjeta-curso">
+      <div class="tarjeta-curso__imagen" style="background-image: linear-gradient(180deg, rgba(16, 24, 40, 0.45) 0%, rgba(16, 24, 40, 0) 55%), url('/img/catalogo/curso-1.jpg')">
+        <span class="badge badge--modalidad-virtual badge--punto badge--sobre-foto">Virtual</span>
+        <div style="flex: 1"></div>
+        <span class="badge badge--destacado badge--sobre-foto">★ Destacado</span>
+      </div>
+      <div class="tarjeta-curso__info">
+        <div class="tarjeta-curso__categoria">Diplomado · Derecho Registral</div>
+        <h3 class="tarjeta-curso__nombre">Diplomado en Derecho Registral y Notarial</h3>
+        <div class="tarjeta-curso__docentes">
+          <div class="tarjeta-curso__avatares">
+            <span class="avatar avatar--sm tarjeta-curso__avatar">MC</span>
+            <span class="avatar avatar--sm tarjeta-curso__avatar tarjeta-curso__avatar--superpuesto">AM</span>
+          </div>
+          <span class="tarjeta-curso__docentes-nombres">Dra. Mariela Cárdenas Ruiz · Dr. Alfonso Miranda Cueto</span>
+        </div>
+        <div class="tarjeta-curso__horas">120 horas académicas</div>
+        <div class="tarjeta-curso__pie">
+          <div>
+            <div class="tarjeta-curso__precio-antes">S/ 650.00</div>
+            <div class="tarjeta-curso__precio">S/ 450.00</div>
+          </div>
+          <span class="badge badge--disp-inmediato">Inicio inmediato</span>
+        </div>
+        <button type="button" class="btn btn--primario btn--ancho-completo tarjeta-curso__boton" routerLink="/cursos/registral-notarial">Ver detalles</button>
+      </div>
+    </article>
+
+    <!-- Tarjeta 2 · Especialización en Contrataciones del Estado (destacado, híbrido, próximo) -->
+    <article class="card tarjeta-curso">
+      <div class="tarjeta-curso__imagen" style="background-image: linear-gradient(180deg, rgba(16, 24, 40, 0.45) 0%, rgba(16, 24, 40, 0) 55%), url('/img/catalogo/curso-2.jpg')">
+        <span class="badge badge--modalidad-hibrido badge--punto badge--sobre-foto">Híbrido</span>
+        <div style="flex: 1"></div>
+        <span class="badge badge--destacado badge--sobre-foto">★ Destacado</span>
+      </div>
+      <div class="tarjeta-curso__info">
+        <div class="tarjeta-curso__categoria">Especialización · Contrataciones del Estado</div>
+        <h3 class="tarjeta-curso__nombre">Especialización en Contrataciones del Estado</h3>
+        <div class="tarjeta-curso__docentes">
+          <span class="avatar avatar--sm tarjeta-curso__avatar">OV</span>
+          <span class="tarjeta-curso__docentes-nombres">Dr. Óscar Villanueva Paz</span>
+        </div>
+        <div class="tarjeta-curso__horas">96 horas académicas</div>
+        <div class="tarjeta-curso__pie">
+          <div class="tarjeta-curso__precio">S/ 380.00</div>
+          <span class="badge badge--disp-proximo">Inicia el 15 de setiembre de 2026</span>
+        </div>
+        <button type="button" class="btn btn--primario btn--ancho-completo tarjeta-curso__boton" routerLink="/cursos/registral-notarial">Ver detalles</button>
+      </div>
+    </article>
+
+    <!-- Tarjeta 3 · Litigación Oral en el Proceso Penal (en vivo, próximo) -->
+    <article class="card tarjeta-curso">
+      <div class="tarjeta-curso__imagen" style="background-image: linear-gradient(180deg, rgba(16, 24, 40, 0.45) 0%, rgba(16, 24, 40, 0) 55%), url('/img/catalogo/curso-3.jpg')">
+        <span class="badge badge--modalidad-vivo badge--punto badge--sobre-foto">En vivo</span>
+      </div>
+      <div class="tarjeta-curso__info">
+        <div class="tarjeta-curso__categoria">Curso · Derecho Penal</div>
+        <h3 class="tarjeta-curso__nombre">Curso de Litigación Oral en el Proceso Penal</h3>
+        <div class="tarjeta-curso__docentes">
+          <span class="avatar avatar--sm tarjeta-curso__avatar">JR</span>
+          <span class="tarjeta-curso__docentes-nombres">Dr. Julio Ramírez Alcántara</span>
+        </div>
+        <div class="tarjeta-curso__horas">48 horas académicas</div>
+        <div class="tarjeta-curso__pie">
+          <div class="tarjeta-curso__precio">S/ 290.00</div>
+          <span class="badge badge--disp-proximo">Inicia el 2 de setiembre de 2026</span>
+        </div>
+        <button type="button" class="btn btn--primario btn--ancho-completo tarjeta-curso__boton" routerLink="/cursos/registral-notarial">Ver detalles</button>
+      </div>
+    </article>
+
+    <!-- Tarjeta 4 · Derecho Laboral y Procesal Laboral (destacado, virtual, inmediato) -->
+    <article class="card tarjeta-curso">
+      <div class="tarjeta-curso__imagen" style="background-image: linear-gradient(180deg, rgba(16, 24, 40, 0.45) 0%, rgba(16, 24, 40, 0) 55%), url('/img/catalogo/curso-4.jpg')">
+        <span class="badge badge--modalidad-virtual badge--punto badge--sobre-foto">Virtual</span>
+        <div style="flex: 1"></div>
+        <span class="badge badge--destacado badge--sobre-foto">★ Destacado</span>
+      </div>
+      <div class="tarjeta-curso__info">
+        <div class="tarjeta-curso__categoria">Diplomado · Derecho Laboral</div>
+        <h3 class="tarjeta-curso__nombre">Diplomado en Derecho Laboral y Procesal Laboral</h3>
+        <div class="tarjeta-curso__docentes">
+          <span class="avatar avatar--sm tarjeta-curso__avatar">AT</span>
+          <span class="tarjeta-curso__docentes-nombres">Dra. Ana Lucía Torres Bermúdez</span>
+        </div>
+        <div class="tarjeta-curso__horas">132 horas académicas</div>
+        <div class="tarjeta-curso__pie">
+          <div>
+            <div class="tarjeta-curso__precio-antes">S/ 700.00</div>
+            <div class="tarjeta-curso__precio">S/ 520.00</div>
+          </div>
+          <span class="badge badge--disp-inmediato">Inicio inmediato</span>
+        </div>
+        <button type="button" class="btn btn--primario btn--ancho-completo tarjeta-curso__boton" routerLink="/cursos/registral-notarial">Ver detalles</button>
+      </div>
+    </article>
+
+    <!-- Tarjeta 5 · Actualización en Tributación Municipal (gratuito, virtual, inmediato) -->
+    <article class="card tarjeta-curso">
+      <div class="tarjeta-curso__imagen" style="background-image: linear-gradient(180deg, rgba(16, 24, 40, 0.45) 0%, rgba(16, 24, 40, 0) 55%), url('/img/catalogo/curso-5.jpg')">
+        <span class="badge badge--modalidad-virtual badge--punto badge--sobre-foto">Virtual</span>
+      </div>
+      <div class="tarjeta-curso__info">
+        <div class="tarjeta-curso__categoria">Actualización · Derecho Tributario</div>
+        <h3 class="tarjeta-curso__nombre">Actualización en Tributación Municipal</h3>
+        <div class="tarjeta-curso__docentes">
+          <span class="avatar avatar--sm tarjeta-curso__avatar">CP</span>
+          <span class="tarjeta-curso__docentes-nombres">Mg. Carlos Peña Solórzano</span>
+        </div>
+        <div class="tarjeta-curso__horas">24 horas académicas</div>
+        <div class="tarjeta-curso__pie">
+          <div class="tarjeta-curso__precio">Gratis</div>
+          <span class="badge badge--disp-inmediato">Inicio inmediato</span>
+        </div>
+        <button type="button" class="btn btn--primario btn--ancho-completo tarjeta-curso__boton" routerLink="/cursos/registral-notarial">Ver detalles</button>
+      </div>
+    </article>
+
+    <!-- Tarjeta 6 · Derecho Administrativo Sancionador (híbrido, en progreso) -->
+    <article class="card tarjeta-curso">
+      <div class="tarjeta-curso__imagen" style="background-image: linear-gradient(180deg, rgba(16, 24, 40, 0.45) 0%, rgba(16, 24, 40, 0) 55%), url('/img/catalogo/curso-6.jpg')">
+        <span class="badge badge--modalidad-hibrido badge--punto badge--sobre-foto">Híbrido</span>
+      </div>
+      <div class="tarjeta-curso__info">
+        <div class="tarjeta-curso__categoria">Especialización · Derecho Administrativo</div>
+        <h3 class="tarjeta-curso__nombre">Especialización en Derecho Administrativo Sancionador</h3>
+        <div class="tarjeta-curso__docentes">
+          <span class="avatar avatar--sm tarjeta-curso__avatar">FZ</span>
+          <span class="tarjeta-curso__docentes-nombres">Dr. Fernando Zegarra Lima</span>
+        </div>
+        <div class="tarjeta-curso__horas">88 horas académicas</div>
+        <div class="tarjeta-curso__pie">
+          <div class="tarjeta-curso__precio">S/ 410.00</div>
+          <span class="badge badge--disp-proximo">En progreso</span>
+        </div>
+        <button type="button" class="btn btn--primario btn--ancho-completo tarjeta-curso__boton" routerLink="/cursos/registral-notarial">Ver detalles</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="catalogo-paginacion">
+    <button type="button" class="btn btn--neutro" disabled>Anterior</button>
+    <span class="catalogo-paginacion__pagina catalogo-paginacion__pagina--activa">1</span>
+    <span class="catalogo-paginacion__pagina catalogo-paginacion__pagina--inactiva">2</span>
+    <button type="button" class="btn btn--neutro">Siguiente</button>
+  </div>
+
+  <!-- Estado alterno: sinResultados -->
+  <p class="pantalla-pendiente__codigo" style="margin: 40px 0 16px">Estado alterno · Sin resultados</p>
+  <div class="estado-vacio">
+    <div class="catalogo-vacio-icono"></div>
+    <h3 class="estado-vacio__titulo">Ningún curso coincide con estos filtros</h3>
+    <p class="estado-vacio__texto">Hay cursos publicados, pero ninguno cumple la búsqueda y los filtros aplicados.</p>
+    <button type="button" class="btn btn--primario">Limpiar filtros</button>
+  </div>
+</div>
+
+<!-- Por qué Escuela Jurídica -->
+<div class="contenedor catalogo-porque">
+  <div class="catalogo-porque__cabecera">
+    <div class="eyebrow eyebrow--centrado">
+      <span class="eyebrow__dash"></span>
+      <span class="eyebrow__texto">Por qué Escuela Jurídica</span>
+      <span class="eyebrow__dash"></span>
+    </div>
+    <h2 class="tipo-h2" style="color: var(--neutral-950); margin: 0">Formación pensada para tu ejercicio profesional</h2>
+  </div>
+  <div class="catalogo-porque__grid">
+    <div class="catalogo-porque__item">
+      <span class="catalogo-porque__icono catalogo-porque__icono--acento">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
+      </span>
+      <h3 class="catalogo-porque__titulo">Certificado verificable</h3>
+      <p class="catalogo-porque__texto">Con código y QR de verificación pública, sin costo adicional.</p>
+    </div>
+    <div class="catalogo-porque__item">
+      <span class="catalogo-porque__icono catalogo-porque__icono--violeta">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+      </span>
+      <h3 class="catalogo-porque__titulo">100% remoto</h3>
+      <p class="catalogo-porque__texto">Estudia desde cualquier lugar del Perú, sin desplazarte.</p>
+    </div>
+    <div class="catalogo-porque__item">
+      <span class="catalogo-porque__icono catalogo-porque__icono--coral">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"/></svg>
+      </span>
+      <h3 class="catalogo-porque__titulo">Docentes en ejercicio</h3>
+      <p class="catalogo-porque__texto">Aprende de quienes resuelven casos reales todos los días.</p>
+    </div>
+    <div class="catalogo-porque__item">
+      <span class="catalogo-porque__icono catalogo-porque__icono--rojo">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/></svg>
+      </span>
+      <h3 class="catalogo-porque__titulo">Respaldo institucional</h3>
+      <p class="catalogo-porque__texto">Entidades como el Colegio de Notarios de Lima refrendan nuestros programas.</p>
+    </div>
+  </div>
+</div>

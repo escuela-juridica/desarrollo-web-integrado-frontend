@@ -1,0 +1,57 @@
+// Header/footer del portal público (EP01, sin sesión). Estilos propios de este layout.
+
+header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--neutral-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-fila {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 72px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-logo {
+  height: 44px;
+  width: auto;
+  cursor: pointer;
+}
+
+.header-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+@media (max-width: 480px) {
+  // El logo + los dos botones no caben en una fila a 320-375px: en vez de
+  // dejar que el auto-margin los empuje a un lado de forma rara al envolver,
+  // se centran las dos filas y los botones ocupan el ancho completo.
+  .header-fila {
+    justify-content: center;
+    gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .header-acciones {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .header-acciones .btn {
+    flex: 1;
+    height: 40px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,1170 @@
+/* ============================================================================
+   ESTILOS COMPARTIDOS — ESEJUR (EP01)
+   ============================================================================
+   Este archivo es SOLO lo REUSABLE: botones, tarjetas, badges, alertas,
+   inputs, tipografia, tokens de color/espaciado. Es una copia exacta
+   (exportada) de lo que ya existe en el proyecto Angular real:
+     src/styles/_tokens.scss
+     src/styles/_componentes.scss
+     src/styles.scss (reglas base)
+
+   NO RENOMBRAR ninguna variable --token o clase .algo que ya exista aca abajo.
+   Son compartidas por las 11 pantallas: si cambias ".btn" por ejemplo,
+   cambias el boton en las 11 pantallas a la vez (para bien o para mal).
+
+   LO QUE **NO** VA ACA: cualquier estilo propio de UNA sola pantalla (el
+   layout del hero de tu pantalla, el ancho de una columna puntual, etc.).
+   Eso va en el bloque <style> que cada archivo .html tiene en su <head>,
+   justo debajo del <link rel="stylesheet" href="estilos.css">, marcado
+   "ESTILOS PROPIOS DE ESTA PANTALLA" — exactamente como en el proyecto
+   Angular real, donde cada pantalla tiene su propio archivo .scss aparte
+   de este global. Mirá la guía celeste al inicio de tu .html para más
+   detalle sobre esto.
+
+   Si necesitas un color, tamaño o estilo que NO existe ni acá ni en el
+   bloque local de tu pantalla, NO inventes un valor suelto (nada de
+   "background:#f4f4f4" a mano sin pensarlo) — anotalo en el recuadro
+   amarillo al final de la guía de tu pantalla y se conversa antes de
+   integrarlo al Angular real (esto sí es compartido, afecta a todos).
+   ========================================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fuente-interfaz);
+  color: var(--neutral-800);
+  background: var(--neutral-050);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--marca-700);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--marca-800);
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--neutral-950);
+}
+
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--acento-100);
+}
+
+.field-hint {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.2s ease,
+    opacity 0.2s ease;
+}
+
+input:focus + .field-hint {
+  max-height: 60px;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+.pantalla-pendiente__codigo {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--esp-02);
+  border-radius: var(--radio-completo);
+  background: var(--acento-100);
+  color: var(--marca-900);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 0 var(--esp-03);
+}
+
+/* ---------------------------------------------------------------------------
+   TOKENS (paleta de colores, espaciado, tipografia, etc.)
+   Fuente: 04-DISENO-UX-UI/01-SISTEMA-DE-DISENO-Y-COMPONENTES.md
+   Si falta un token, revisar ese documento primero — no inventar valores.
+   ------------------------------------------------------------------------ */
+:root {
+  /* Marca */
+  --marca-900: #103860;
+  --marca-800: #164a73;
+  --marca-700: #1f5f8b;
+  --acento-700: #006f73;
+  --acento-500: #00d8d8;
+  --acento-100: #d9fafa;
+  --acento-050: #f0ffff;
+  --rojo-marca-600: #c83e4d;
+  --rojo-marca-050: #fff1f3;
+  --blanco: #ffffff;
+
+  /* Complementarios */
+  --violeta-700: #6941c6;
+  --violeta-050: #f4f3ff;
+  --celeste-700: #026aa2;
+  --celeste-050: #f0f9ff;
+  --coral-400: #ff8a7a;
+  --coral-050: #fff1ef;
+  --dorado-500: #f4b740;
+  --dorado-050: #fff8e1;
+
+  /* Neutrales */
+  --neutral-950: #101828;
+  --neutral-800: #344054;
+  --neutral-600: #475467;
+  --neutral-500: #667085;
+  --neutral-400: #98a2b3;
+  --neutral-300: #d0d5dd;
+  --neutral-200: #eaecf0;
+  --neutral-100: #f2f4f7;
+  --neutral-050: #f8fafc;
+
+  /* Semanticos */
+  --exito: #027a48;
+  --exito-fondo: #ecfdf3;
+  --exito-borde: #abefc6;
+  --advertencia: #b54708;
+  --advertencia-fondo: #fffaeb;
+  --advertencia-borde: #fedf89;
+  --error: #b42318;
+  --error-fondo: #fef3f2;
+  --error-borde: #fecdca;
+  --informacion: #175cd3;
+  --informacion-fondo: #eff8ff;
+  --informacion-borde: #b2ddff;
+
+  /* Foco de teclado */
+  --foco: #a6f4f4;
+
+  /* Espaciado (base 8px) */
+  --esp-01: 4px;
+  --esp-02: 8px;
+  --esp-03: 12px;
+  --esp-04: 16px;
+  --esp-05: 20px;
+  --esp-06: 24px;
+  --esp-08: 32px;
+  --esp-10: 40px;
+  --esp-12: 48px;
+  --esp-16: 64px;
+  --esp-20: 80px;
+  --esp-24: 96px;
+
+  /* Radios */
+  --radio-xs: 4px;
+  --radio-sm: 6px;
+  --radio-md: 8px;
+  --radio-lg: 12px;
+  --radio-xl: 16px;
+  --radio-completo: 999px;
+
+  /* Sombras */
+  --sombra-xs: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --sombra-sm: 0 2px 8px rgba(16, 24, 40, 0.08);
+  --sombra-md: 0 8px 24px rgba(16, 24, 40, 0.12);
+  --sombra-lg: 0 20px 40px rgba(16, 24, 40, 0.18);
+
+  /* Tipografia */
+  --fuente-interfaz: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --fuente-editorial: "Merriweather", Georgia, serif;
+
+  /* Tokens de componente */
+  --boton-primario-bg: var(--marca-900);
+  --boton-primario-bg-hover: var(--marca-800);
+  --boton-primario-fg: var(--blanco);
+  --boton-secundario-bg: var(--blanco);
+  --boton-secundario-bg-hover: var(--neutral-050);
+  --boton-secundario-borde: var(--marca-900);
+  --boton-secundario-fg: var(--marca-900);
+  --boton-acento-bg: var(--acento-700);
+  --boton-acento-bg-hover: #005c60;
+  --boton-acento-fg: var(--blanco);
+  --boton-neutro-bg: var(--blanco);
+  --boton-neutro-bg-hover: var(--neutral-050);
+  --boton-neutro-borde: var(--neutral-300);
+  --boton-neutro-fg: var(--neutral-800);
+
+  --input-alto: 48px;
+  --input-borde: var(--neutral-300);
+  --input-borde-error: var(--error);
+  --input-borde-foco: var(--acento-700);
+  --input-anillo-foco: var(--acento-100);
+  --input-fondo: var(--blanco);
+  --input-fondo-solo-lectura: var(--neutral-050);
+  --input-texto: var(--neutral-950);
+  --input-placeholder: var(--neutral-500);
+  --input-etiqueta: var(--neutral-800);
+  --input-ayuda-dorado: #b8860b;
+
+  --tarjeta-fondo: var(--blanco);
+  --tarjeta-borde: var(--neutral-200);
+  --tarjeta-sombra: var(--sombra-xs);
+  --tarjeta-acento-superior: linear-gradient(90deg, var(--marca-900) 0%, var(--acento-700) 100%);
+
+  --eyebrow-color: var(--rojo-marca-600);
+}
+
+/* ---------------------------------------------------------------------------
+   CLASES REUTILIZABLES (botones, tarjetas, badges, alertas, etc.)
+   Un archivo de pantalla NO deberia reescribir estos estilos: los usa tal cual.
+
+   Quiebres responsivos:
+     >= 1280px escritorio amplio · 1024-1279 escritorio compacto
+     768-1023 tableta · < 768 movil · < 480 movil estrecho
+   ------------------------------------------------------------------------ */
+
+/* Contenedor */
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+@media (max-width: 767px) {
+  .contenedor {
+    padding: 24px 16px 40px;
+  }
+}
+
+.contenedor-centrado {
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+.contenedor-lectura {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+
+@media (max-width: 767px) {
+  .contenedor-centrado {
+    padding: 32px 20px 48px;
+  }
+
+  .contenedor-lectura {
+    padding: 32px 16px 48px;
+  }
+}
+
+/* Tipografia fluida */
+.tipo-display {
+  font-family: var(--fuente-editorial);
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 700;
+}
+
+.tipo-h1 {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+.tipo-h2 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+}
+
+.tipo-h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 650;
+}
+
+@media (max-width: 767px) {
+  .tipo-display {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .tipo-h1 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .tipo-h2 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .tipo-h3 {
+    font-size: 22px;
+    line-height: 30px;
+  }
+}
+
+/* Eyebrow */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-02);
+  margin-bottom: var(--esp-02);
+}
+
+.eyebrow--centrado {
+  justify-content: center;
+}
+
+.eyebrow__dash {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--eyebrow-color);
+  flex: none;
+}
+
+.eyebrow__texto {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--eyebrow-color);
+}
+
+.eyebrow__texto--claro {
+  color: var(--rojo-marca-050);
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 var(--esp-04);
+  border-radius: var(--radio-md);
+  border: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--grande {
+  height: 48px;
+  padding: 0 var(--esp-05);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btn--ancho-completo {
+  width: 100%;
+}
+
+.btn--primario {
+  background: var(--boton-primario-bg);
+  color: var(--boton-primario-fg);
+}
+
+.btn--primario:hover {
+  background: var(--boton-primario-bg-hover);
+}
+
+.btn--secundario {
+  background: var(--boton-secundario-bg);
+  color: var(--boton-secundario-fg);
+  border: 1px solid var(--boton-secundario-borde);
+}
+
+.btn--secundario:hover {
+  background: var(--boton-secundario-bg-hover);
+}
+
+.btn--acento {
+  background: var(--boton-acento-bg);
+  color: var(--boton-acento-fg);
+}
+
+.btn--acento:hover {
+  background: var(--boton-acento-bg-hover);
+}
+
+.btn--neutro {
+  background: var(--boton-neutro-bg);
+  color: var(--boton-neutro-fg);
+  border: 1px solid var(--boton-neutro-borde);
+}
+
+.btn--neutro:hover {
+  background: var(--boton-neutro-bg-hover);
+}
+
+.btn--google {
+  background: var(--blanco);
+  color: var(--neutral-800);
+  border: 1px solid var(--neutral-300);
+}
+
+.btn--google:hover {
+  background: var(--neutral-050);
+}
+
+.btn--deshabilitado,
+.btn:disabled {
+  background: var(--neutral-200);
+  color: var(--neutral-400);
+  cursor: not-allowed;
+}
+
+/* Campos */
+.label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-02);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--input-etiqueta);
+  margin-bottom: var(--esp-02);
+}
+
+.nota-pill {
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--esp-02);
+  border-radius: var(--radio-completo);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: var(--acento-100);
+  color: var(--acento-700);
+}
+
+.nota-pill--neutra {
+  background: var(--neutral-100);
+  color: var(--neutral-500);
+}
+
+.input {
+  width: 100%;
+  height: var(--input-alto);
+  border-radius: var(--radio-md);
+  border: 1px solid var(--input-borde);
+  padding: 0 14px;
+  background: var(--input-fondo);
+  color: var(--input-texto);
+}
+
+.input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.input:focus {
+  border-color: var(--input-borde-foco);
+}
+
+.input--error {
+  border-color: var(--input-borde-error);
+}
+
+.input--solo-lectura {
+  background: var(--input-fondo-solo-lectura);
+}
+
+.input-con-accion {
+  display: flex;
+  gap: var(--esp-02);
+}
+
+.input-con-accion .input {
+  flex: 1;
+  min-width: 0;
+}
+
+.campo-error {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--error);
+  margin-top: 6px;
+}
+
+.campo-ayuda-dorada {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--input-ayuda-dorado);
+}
+
+.checkbox-campo {
+  display: flex;
+  gap: var(--esp-03);
+  align-items: flex-start;
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-800);
+  cursor: pointer;
+}
+
+.checkbox-campo input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--marca-900);
+  cursor: pointer;
+  margin-top: 1px;
+  flex: none;
+}
+
+.checkbox-campo--recuadro {
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radio-md);
+  background: var(--neutral-050);
+}
+
+.divisor-con-texto {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--neutral-500);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.divisor-con-texto__linea {
+  flex: 1;
+  height: 1px;
+  background: var(--neutral-200);
+}
+
+/* Tarjetas */
+.card {
+  background: var(--tarjeta-fondo);
+  border: 1px solid var(--tarjeta-borde);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--tarjeta-sombra);
+  padding: var(--esp-06);
+}
+
+.card--acento-superior {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--acento-superior::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--tarjeta-acento-superior);
+}
+
+/* Avatar */
+.avatar {
+  border-radius: var(--radio-completo);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex: none;
+  background: var(--acento-100);
+  color: var(--marca-900);
+}
+
+.avatar--sm {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.avatar--md {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.avatar--lg {
+  width: 72px;
+  height: 72px;
+  font-size: 24px;
+}
+
+.avatar--marca {
+  background: var(--rojo-marca-600);
+  color: var(--blanco);
+}
+
+.avatar--cuenta {
+  background: linear-gradient(135deg, var(--marca-700) 0%, var(--acento-700) 100%);
+  color: var(--blanco);
+  border: none;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.25);
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.avatar--cuenta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(16, 24, 40, 0.3);
+}
+
+/* Badges */
+.badge {
+  min-height: 24px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px var(--esp-02);
+  border-radius: var(--radio-completo);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.badge--punto::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radio-completo);
+  background: currentColor;
+}
+
+.badge--modalidad-virtual {
+  background: var(--acento-700);
+  color: var(--blanco);
+}
+
+.badge--modalidad-vivo {
+  background: #dc493a;
+  color: var(--blanco);
+}
+
+.badge--modalidad-hibrido {
+  background: var(--violeta-700);
+  color: var(--blanco);
+}
+
+.badge--virtual-suave {
+  background: var(--acento-100);
+  color: var(--marca-900);
+}
+
+.badge--vivo-suave {
+  background: var(--coral-050);
+  color: var(--marca-900);
+}
+
+.badge--hibrido-suave {
+  background: var(--violeta-050);
+  color: var(--violeta-700);
+}
+
+.badge--disp-inmediato {
+  background: var(--exito-fondo);
+  color: var(--exito);
+}
+
+.badge--disp-proximo {
+  background: var(--celeste-050);
+  color: var(--celeste-700);
+}
+
+.badge--disp-cerrado {
+  background: var(--neutral-100);
+  color: var(--neutral-600);
+}
+
+.badge--destacado {
+  background: var(--rojo-marca-600);
+  color: var(--blanco);
+  font-weight: 700;
+}
+
+.badge--vista-previa {
+  background: var(--acento-100);
+  color: var(--marca-900);
+}
+
+.badge--sobre-foto {
+  box-shadow:
+    0 2px 6px rgba(16, 24, 40, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Alertas */
+.alerta {
+  border-radius: var(--radio-md);
+  padding: var(--esp-04);
+  display: flex;
+  gap: var(--esp-03);
+  align-items: flex-start;
+}
+
+.alerta__icono {
+  flex: 0 0 20px;
+  height: 20px;
+  border-radius: var(--radio-completo);
+  color: var(--blanco);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.alerta__titulo {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.alerta__texto {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.alerta--error {
+  background: var(--error-fondo);
+  border: 1px solid var(--error-borde);
+}
+
+.alerta--error .alerta__icono {
+  background: var(--error);
+}
+
+.alerta--error .alerta__titulo,
+.alerta--error .alerta__texto {
+  color: var(--error);
+}
+
+.alerta--info {
+  background: var(--informacion-fondo);
+  border: 1px solid var(--informacion-borde);
+}
+
+.alerta--info .alerta__icono {
+  background: var(--informacion);
+}
+
+.alerta--info .alerta__titulo,
+.alerta--info .alerta__texto {
+  color: var(--informacion);
+}
+
+.alerta--exito {
+  background: var(--exito-fondo);
+  border: 1px solid var(--exito-borde);
+}
+
+.alerta--exito .alerta__icono {
+  background: var(--exito);
+}
+
+.alerta--exito .alerta__titulo,
+.alerta--exito .alerta__texto {
+  color: var(--exito);
+}
+
+.alerta--advertencia {
+  background: var(--advertencia-fondo);
+  border: 1px solid var(--advertencia-borde);
+}
+
+.alerta--advertencia .alerta__icono {
+  background: var(--advertencia);
+}
+
+.alerta--advertencia .alerta__titulo,
+.alerta--advertencia .alerta__texto {
+  color: var(--advertencia);
+}
+
+/* Icono de estado: circulo de 64px con un icono/texto centrado.
+   Se repite igual en verificar-correo, recuperar-password y nueva-password. */
+.icono-estado {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radio-completo);
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 auto 20px;
+}
+
+.icono-estado--info {
+  background: var(--informacion-fondo);
+  color: var(--informacion);
+}
+
+.icono-estado--exito {
+  background: var(--exito-fondo);
+  color: var(--exito);
+}
+
+/* Requisitos de contraseña: checklist "○ Al menos 8 caracteres" que se
+   repite igual en nueva-password, registro y mi-perfil. */
+.requisitos-pass-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.requisitos-pass-lista--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+
+.requisito-pass {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+}
+
+.requisito-pass--sm {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.requisito-pass__marca {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radio-completo);
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--neutral-100);
+  color: var(--neutral-500);
+}
+
+/* Hero media (fondo con imagen + degradado) */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-media__imagen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 350ms ease;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+/* Estado vacio */
+.estado-vacio {
+  background: var(--blanco);
+  border: 1px dashed var(--neutral-400);
+  border-radius: var(--radio-lg);
+  padding: var(--esp-16) var(--esp-06);
+  text-align: center;
+}
+
+.estado-vacio__titulo {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--neutral-950);
+  margin: 0 0 var(--esp-02);
+}
+
+.estado-vacio__texto {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--neutral-600);
+  margin: 0 auto var(--esp-06);
+  max-width: 460px;
+}
+
+/* Panel comercial ficha (PF-002) */
+.ficha-price {
+  margin-top: -300px;
+}
+
+@media (max-width: 899px) {
+  .ficha-price {
+    margin-top: 0;
+  }
+}
+
+/* Responsivo transversal (evita desbordes en 320-375px) */
+@media (max-width: 480px) {
+  .btn {
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .card {
+    padding: var(--esp-04);
+  }
+}
+
+/* Header del área del alumno (Panel/Mi perfil) */
+.menu-cuenta__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.menu-cuenta__item:hover {
+  background: var(--neutral-050);
+}
+
+.nav-enlace {
+  border-bottom: 3px solid transparent;
+  color: var(--neutral-600);
+  font-weight: 400;
+}
+
+.nav-enlace--activo {
+  border-bottom-color: var(--acento-500);
+  color: var(--marca-900);
+  font-weight: 600;
+}
+
+@media (max-width: 1023px) {
+  .header-fila {
+    justify-content: space-between;
+  }
+
+  .header-nav {
+    order: 3;
+    flex: 1 1 100% !important;
+  }
+}
+
+.header-cuenta {
+  position: relative;
+}
+
+.header-hamburguesa {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--radio-md);
+  border: 1px solid var(--neutral-200);
+  background: #ffffff;
+  color: var(--neutral-600);
+  cursor: pointer;
+}
+
+.header-hamburguesa:hover {
+  background: var(--neutral-050);
+}
+
+.menu-movil {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 16px 16px;
+  border-top: 1px solid var(--neutral-200);
+}
+
+.menu-movil__item {
+  padding: 12px 10px;
+  border-radius: var(--radio-md);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu-movil__item:hover {
+  background: var(--neutral-050);
+}
+
+.menu-movil__item--activo {
+  color: var(--marca-900);
+  font-weight: 600;
+  background: var(--acento-050);
+}
+
+.menu-movil__item--deshabilitado {
+  color: var(--neutral-400);
+  cursor: default;
+}
+
+.menu-movil__item--deshabilitado:hover {
+  background: none;
+}
+
+@media (max-width: 767px) {
+  .header-nav {
+    display: none !important;
+  }
+
+  .header-hamburguesa {
+    display: inline-flex;
+  }
+}
+
+/* Hero del catálogo (PF-001): en móvil el título se envuelve y el hero crece,
+   las flechas del carrusel (centradas con top:50%) terminan flotando sobre el
+   texto — se ocultan y basta con los puntos. */
+@media (max-width: 767px) {
+  .hero-catalogo {
+    padding: 40px 20px !important;
+  }
+
+  .hero-catalogo__flecha {
+    display: none;
+  }
+}
+
+/* Header público con botones (Privacidad/Términos): a 480px el logo + los 2
+   botones no caben en una fila, se centran y los botones ocupan el ancho. */
+@media (max-width: 480px) {
+  .header-fila {
+    justify-content: center;
+    gap: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .header-acciones {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  .header-acciones .btn {
+    flex: 1;
+    height: 40px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   GUIA VISUAL PARA EL EQUIPO
+   Estas clases NO existen en Angular — son solo para este paquete de archivos
+   sueltos. Se usan en el panel de instrucciones al inicio de cada pantalla y
+   se descartan por completo cuando el markup se integra al Angular real.
+   ------------------------------------------------------------------------ */
+.guia-equipo {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  padding: 20px 24px;
+  border: 2px dashed var(--acento-700);
+  border-radius: var(--radio-lg);
+  background: var(--acento-050);
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--neutral-800);
+}
+
+.guia-equipo__titulo {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--marca-900);
+  margin: 0 0 4px;
+}
+
+.guia-equipo__hu {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  margin-bottom: 12px;
+  border-radius: var(--radio-completo);
+  background: var(--marca-900);
+  color: var(--blanco);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.guia-equipo h3 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--marca-700);
+  margin: 14px 0 4px;
+}
+
+.guia-equipo ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.guia-equipo li {
+  margin-bottom: 4px;
+}
+
+.guia-equipo code {
+  background: var(--blanco);
+  border: 1px solid var(--neutral-200);
+  padding: 1px 6px;
+  border-radius: var(--radio-xs);
+  font-size: 13px;
+}
+
+.guia-equipo__nuevo {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radio-md);
+  background: var(--dorado-050);
+  border: 1px dashed var(--dorado-500);
+}

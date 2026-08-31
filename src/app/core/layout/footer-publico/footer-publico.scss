@@ -1,0 +1,60 @@
+// Footer del portal público, compartido por layout-publico y layout-auth.
+// Estilos propios de este componente.
+
+footer {
+  background: var(--neutral-950);
+  color: var(--neutral-400);
+  padding: 40px 24px;
+}
+
+.footer-fila {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer-marca {
+  flex: 0 1 300px;
+}
+
+.footer-marca__logo {
+  height: 36px;
+  width: auto;
+  background: #ffffff;
+  border-radius: var(--radio-sm);
+  padding: 5px 8px;
+}
+
+.footer-marca__texto {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 14px 0 0;
+}
+
+.footer-columnas {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  line-height: 28px;
+}
+
+.footer-columnas a,
+.footer-columnas span {
+  color: var(--neutral-400);
+}
+
+.footer-columna__titulo {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 480px) {
+  .footer-fila {
+    gap: 24px;
+  }
+}

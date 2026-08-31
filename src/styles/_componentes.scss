@@ -1,0 +1,737 @@
+// Clases globales reutilizables de ESEJUR (mockup EP01).
+// Reflejan exactamente los patrones repetidos del prototipo
+// (detalles/04-DISENO-UX-UI/PROTOTIPO HTML/Prototipo ESEJUR.dc.html).
+// Un componente de pantalla NO deberia reescribir estos estilos: los usa tal cual.
+//
+// Quiebres (00-GUIA-DISENO-UX-UI.md §12):
+//   >= 1280px escritorio amplio · 1024-1279 escritorio compacto
+//   768-1023 tableta · < 768 movil · < 480 movil estrecho
+
+// -------------------------------------------------------------- Contenedor --
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+@media (max-width: 767px) {
+  .contenedor {
+    padding: 24px 16px 40px;
+  }
+}
+
+// Formularios centrados (acceso, recuperar/nueva contraseña, verificar correo).
+// El max-width puntual (440/480/560px) se agrega inline en cada pantalla.
+.contenedor-centrado {
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+// Documentos de lectura larga (privacidad, terminos).
+.contenedor-lectura {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+
+@media (max-width: 767px) {
+  .contenedor-centrado {
+    padding: 32px 20px 48px;
+  }
+
+  .contenedor-lectura {
+    padding: 32px 16px 48px;
+  }
+}
+
+// ------------------------------------------------------- Tipografia fluida --
+// Escala del sistema de diseño: desktop -> movil (< 768px), sin romper diseños
+// que ya fijan su propio font-size puntual mas abajo en cada pantalla.
+.tipo-display {
+  font-family: var(--fuente-editorial);
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 700;
+}
+
+.tipo-h1 {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+.tipo-h2 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+}
+
+.tipo-h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 650;
+}
+
+@media (max-width: 767px) {
+  .tipo-display {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .tipo-h1 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .tipo-h2 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .tipo-h3 {
+    font-size: 22px;
+    line-height: 30px;
+  }
+}
+
+// ---------------------------------------------------------------- Eyebrow --
+// Guion rojo + texto en mayusculas antes de un titulo (aparece en casi toda pantalla).
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-02);
+  margin-bottom: var(--esp-02);
+}
+
+.eyebrow--centrado {
+  justify-content: center;
+}
+
+.eyebrow__dash {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--eyebrow-color);
+  flex: none;
+}
+
+.eyebrow__texto {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--eyebrow-color);
+}
+
+.eyebrow__texto--claro {
+  color: var(--rojo-marca-050);
+}
+
+// ------------------------------------------------------------------ Botones --
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 var(--esp-04);
+  border-radius: var(--radio-md);
+  border: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--grande {
+  height: 48px;
+  padding: 0 var(--esp-05);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btn--ancho-completo {
+  width: 100%;
+}
+
+.btn--primario {
+  background: var(--boton-primario-bg);
+  color: var(--boton-primario-fg);
+}
+
+.btn--primario:hover {
+  background: var(--boton-primario-bg-hover);
+}
+
+.btn--secundario {
+  background: var(--boton-secundario-bg);
+  color: var(--boton-secundario-fg);
+  border: 1px solid var(--boton-secundario-borde);
+}
+
+.btn--secundario:hover {
+  background: var(--boton-secundario-bg-hover);
+}
+
+.btn--acento {
+  background: var(--boton-acento-bg);
+  color: var(--boton-acento-fg);
+}
+
+.btn--acento:hover {
+  background: var(--boton-acento-bg-hover);
+}
+
+.btn--neutro {
+  background: var(--boton-neutro-bg);
+  color: var(--boton-neutro-fg);
+  border: 1px solid var(--boton-neutro-borde);
+}
+
+.btn--neutro:hover {
+  background: var(--boton-neutro-bg-hover);
+}
+
+.btn--google {
+  background: var(--blanco);
+  color: var(--neutral-800);
+  border: 1px solid var(--neutral-300);
+}
+
+.btn--google:hover {
+  background: var(--neutral-050);
+}
+
+.btn--deshabilitado,
+.btn:disabled {
+  background: var(--neutral-200);
+  color: var(--neutral-400);
+  cursor: not-allowed;
+}
+
+// -------------------------------------------------------------- Campos ------
+.label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-02);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--input-etiqueta);
+  margin-bottom: var(--esp-02);
+}
+
+.nota-pill {
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--esp-02);
+  border-radius: var(--radio-completo);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: var(--acento-100);
+  color: var(--acento-700);
+}
+
+.nota-pill--neutra {
+  background: var(--neutral-100);
+  color: var(--neutral-500);
+}
+
+.input {
+  width: 100%;
+  height: var(--input-alto);
+  border-radius: var(--radio-md);
+  border: 1px solid var(--input-borde);
+  padding: 0 14px;
+  background: var(--input-fondo);
+  color: var(--input-texto);
+}
+
+.input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.input:focus {
+  border-color: var(--input-borde-foco);
+}
+
+.input--error {
+  border-color: var(--input-borde-error);
+}
+
+.input--solo-lectura {
+  background: var(--input-fondo-solo-lectura);
+}
+
+.input-con-accion {
+  display: flex;
+  gap: var(--esp-02);
+}
+
+.input-con-accion .input {
+  flex: 1;
+  min-width: 0;
+}
+
+.campo-error {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--error);
+  margin-top: 6px;
+}
+
+.campo-ayuda-dorada {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--input-ayuda-dorado);
+}
+
+.checkbox-campo {
+  display: flex;
+  gap: var(--esp-03);
+  align-items: flex-start;
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-800);
+  cursor: pointer;
+}
+
+.checkbox-campo input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--marca-900);
+  cursor: pointer;
+  margin-top: 1px;
+  flex: none;
+}
+
+.checkbox-campo--recuadro {
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radio-md);
+  background: var(--neutral-050);
+}
+
+.divisor-con-texto {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--neutral-500);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.divisor-con-texto__linea {
+  flex: 1;
+  height: 1px;
+  background: var(--neutral-200);
+}
+
+// --------------------------------------------------------------- Tarjetas --
+.card {
+  background: var(--tarjeta-fondo);
+  border: 1px solid var(--tarjeta-borde);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--tarjeta-sombra);
+  padding: var(--esp-06);
+}
+
+.card--acento-superior {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--acento-superior::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--tarjeta-acento-superior);
+}
+
+// ----------------------------------------------------------------- Avatar --
+.avatar {
+  border-radius: var(--radio-completo);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex: none;
+  background: var(--acento-100);
+  color: var(--marca-900);
+}
+
+.avatar--sm {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.avatar--md {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.avatar--lg {
+  width: 72px;
+  height: 72px;
+  font-size: 24px;
+}
+
+.avatar--marca {
+  background: var(--rojo-marca-600);
+  color: var(--blanco);
+}
+
+// Disparador del menú de cuenta en el header del alumno: mismo degradado de marca
+// que .tarjeta-acento-superior, con leve elevación al pasar el cursor.
+.avatar--cuenta {
+  background: linear-gradient(135deg, var(--marca-700) 0%, var(--acento-700) 100%);
+  color: var(--blanco);
+  border: none;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.25);
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.avatar--cuenta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(16, 24, 40, 0.3);
+}
+
+// ----------------------------------------------------------------- Badges --
+.badge {
+  min-height: 24px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px var(--esp-02);
+  border-radius: var(--radio-completo);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.badge--punto::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radio-completo);
+  background: currentColor;
+}
+
+// Modalidad "sobre foto" (tarjeta de catalogo, hero de ficha): color vivido, texto blanco.
+.badge--modalidad-virtual {
+  background: var(--acento-700);
+  color: var(--blanco);
+}
+
+.badge--modalidad-vivo {
+  background: #dc493a;
+  color: var(--blanco);
+}
+
+.badge--modalidad-hibrido {
+  background: var(--violeta-700);
+  color: var(--blanco);
+}
+
+// Modalidad en contexto neutral (tablas, listas administrativas): version suave.
+.badge--virtual-suave {
+  background: var(--acento-100);
+  color: var(--marca-900);
+}
+
+.badge--vivo-suave {
+  background: var(--coral-050);
+  color: var(--marca-900);
+}
+
+.badge--hibrido-suave {
+  background: var(--violeta-050);
+  color: var(--violeta-700);
+}
+
+// Disponibilidad comercial (tarjeta de catalogo: "Inicio inmediato" / "Próximo inicio" / "Sin cupos").
+.badge--disp-inmediato {
+  background: var(--exito-fondo);
+  color: var(--exito);
+}
+
+.badge--disp-proximo {
+  background: var(--celeste-050);
+  color: var(--celeste-700);
+}
+
+.badge--disp-cerrado {
+  background: var(--neutral-100);
+  color: var(--neutral-600);
+}
+
+.badge--destacado {
+  background: var(--rojo-marca-600);
+  color: var(--blanco);
+  font-weight: 700;
+}
+
+.badge--vista-previa {
+  background: var(--acento-100);
+  color: var(--marca-900);
+}
+
+.badge--sobre-foto {
+  box-shadow:
+    0 2px 6px rgba(16, 24, 40, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+// ----------------------------------------------------------------- Alertas --
+.alerta {
+  border-radius: var(--radio-md);
+  padding: var(--esp-04);
+  display: flex;
+  gap: var(--esp-03);
+  align-items: flex-start;
+}
+
+.alerta__icono {
+  flex: 0 0 20px;
+  height: 20px;
+  border-radius: var(--radio-completo);
+  color: var(--blanco);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.alerta__titulo {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.alerta__texto {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.alerta--error {
+  background: var(--error-fondo);
+  border: 1px solid var(--error-borde);
+}
+
+.alerta--error .alerta__icono {
+  background: var(--error);
+}
+
+.alerta--error .alerta__titulo,
+.alerta--error .alerta__texto {
+  color: var(--error);
+}
+
+.alerta--info {
+  background: var(--informacion-fondo);
+  border: 1px solid var(--informacion-borde);
+}
+
+.alerta--info .alerta__icono {
+  background: var(--informacion);
+}
+
+.alerta--info .alerta__titulo,
+.alerta--info .alerta__texto {
+  color: var(--informacion);
+}
+
+.alerta--exito {
+  background: var(--exito-fondo);
+  border: 1px solid var(--exito-borde);
+}
+
+.alerta--exito .alerta__icono {
+  background: var(--exito);
+}
+
+.alerta--exito .alerta__titulo,
+.alerta--exito .alerta__texto {
+  color: var(--exito);
+}
+
+.alerta--advertencia {
+  background: var(--advertencia-fondo);
+  border: 1px solid var(--advertencia-borde);
+}
+
+.alerta--advertencia .alerta__icono {
+  background: var(--advertencia);
+}
+
+.alerta--advertencia .alerta__titulo,
+.alerta--advertencia .alerta__texto {
+  color: var(--advertencia);
+}
+
+// -------------------------------------------------------- Icono de estado --
+// Circulo de 64px con un icono/texto centrado. Se repite igual en verificar
+// correo, recuperar contraseña y nueva contraseña (pendiente/confirmado).
+.icono-estado {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radio-completo);
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 auto 20px;
+}
+
+.icono-estado--info {
+  background: var(--informacion-fondo);
+  color: var(--informacion);
+}
+
+.icono-estado--exito {
+  background: var(--exito-fondo);
+  color: var(--exito);
+}
+
+// ------------------------------------------------- Requisitos de contraseña --
+// Checklist "○ Al menos 8 caracteres" que se repite igual en nueva-password,
+// registro y mi-perfil (pestaña Seguridad).
+.requisitos-pass-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.requisitos-pass-lista--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+
+.requisito-pass {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+}
+
+.requisito-pass--sm {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.requisito-pass__marca {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radio-completo);
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--neutral-100);
+  color: var(--neutral-500);
+}
+
+// -------------------------------------------------------------- Hero media --
+// Fondo con imagen + degradado, usado en heros y paneles laterales de auth.
+.hero-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  // z-index explícito: swiper-container trae su propio z-index interno que,
+  // sin esto, termina tapando el degradado y el contenido del hero.
+  z-index: 0;
+}
+
+.hero-media__imagen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 350ms ease;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+// ------------------------------------------------------------- Estado vacio --
+.estado-vacio {
+  background: var(--blanco);
+  border: 1px dashed var(--neutral-400);
+  border-radius: var(--radio-lg);
+  padding: var(--esp-16) var(--esp-06);
+  text-align: center;
+}
+
+.estado-vacio__titulo {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--neutral-950);
+  margin: 0 0 var(--esp-02);
+}
+
+.estado-vacio__texto {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--neutral-600);
+  margin: 0 auto var(--esp-06);
+  max-width: 460px;
+}
+
+// ---------------------------------------------------- Panel comercial ficha --
+// PF-002: el panel de precio "flota" pegado al hero en escritorio; en pantallas
+// angostas (donde la ficha ya se apilo a una columna) vuelve a su posicion normal.
+.ficha-price {
+  margin-top: -300px;
+}
+
+@media (max-width: 899px) {
+  .ficha-price {
+    margin-top: 0;
+  }
+}
+
+// ------------------------------------------------------------- Responsivo ---
+// Reglas transversales para que ningun bloque copiado del prototipo desborde
+// un viewport angosto (320-375px), sin tener que reescribir cada pantalla.
+@media (max-width: 480px) {
+  .btn {
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .card {
+    padding: var(--esp-04);
+  }
+}

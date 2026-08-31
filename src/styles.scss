@@ -1,1 +1,122 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos globales.
+ * Los tokens de color/espaciado/tipografia viven en styles/_tokens.scss.
+ * Las reglas base de aqui abajo son las mismas que trae el <style> del prototipo
+ * (detalles/04-DISENO-UX-UI/PROTOTIPO HTML/Prototipo ESEJUR.dc.html), solo que usando
+ * los tokens en vez de hex sueltos. No inventar colores nuevos: si falta uno, revisar
+ * primero 01-SISTEMA-DE-DISENO-Y-COMPONENTES.md.
+ */
+@use "styles/tokens";
+@use "styles/componentes";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fuente-interfaz);
+  color: var(--neutral-800);
+  background: var(--neutral-050);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--marca-700);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--marca-800);
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--neutral-950);
+}
+
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--acento-100);
+}
+
+/* Ayuda de campo que aparece solo con el input enfocado (registro, cambio de contraseña, etc.) */
+.field-hint {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.2s ease,
+    opacity 0.2s ease;
+}
+
+input:focus + .field-hint {
+  max-height: 60px;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+/* Placeholder de pantallas aun no maquetadas. Se retira cuando se porta el HTML real. */
+.pantalla-pendiente {
+  max-width: 720px;
+  margin: var(--esp-10) auto;
+  padding: var(--esp-06);
+  border: 1px dashed var(--neutral-300);
+  border-radius: var(--radio-lg);
+  background: var(--blanco);
+}
+
+.pantalla-pendiente__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--marca-700);
+  margin: 0 0 var(--esp-04);
+}
+
+.pantalla-pendiente__codigo {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--esp-02);
+  border-radius: var(--radio-completo);
+  background: var(--acento-100);
+  color: var(--marca-900);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 0 var(--esp-03);
+}
+
+.pantalla-pendiente p {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+  margin: 0 0 var(--esp-02);
+}
+
+.pantalla-pendiente code {
+  background: var(--neutral-100);
+  padding: 2px 6px;
+  border-radius: var(--radio-xs);
+  font-size: 13px;
+}

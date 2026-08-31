@@ -1,0 +1,26 @@
+// Header del flujo de autenticación: mismo header público pero sin los
+// botones "Iniciar sesión"/"Crear cuenta" — no tiene sentido mostrarlos en
+// ese mismo flujo (acceso/registro van sin header en absoluto, aparte).
+
+header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--neutral-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-fila {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 72px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  height: 44px;
+  width: auto;
+  cursor: pointer;
+}

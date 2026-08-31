@@ -1,0 +1,16 @@
+<!-- Encabezado y pie del portal público (EP01, sin sesión). Mockup fiel al prototipo. -->
+<header>
+  <div class="header-fila">
+    <a routerLink="/catalogo"><img src="img/logo-esejur.png" alt="Escuela Jurídica" class="header-logo" /></a>
+    <div class="header-acciones">
+      <button type="button" class="btn btn--secundario" routerLink="/acceso">Iniciar sesión</button>
+      <button type="button" class="btn btn--primario" routerLink="/registro">Crear cuenta</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <router-outlet />
+</main>
+
+<app-footer-publico />

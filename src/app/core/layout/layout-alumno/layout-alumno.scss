@@ -1,0 +1,249 @@
+// Header/footer del área del alumno (EP01: PF-008 y PF-009). Estilos propios de este layout.
+
+header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--neutral-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-fila {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 64px;
+  padding: 6px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-logo {
+  height: 36px;
+  width: auto;
+  cursor: pointer;
+}
+
+.header-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  flex: 1 1 200px;
+  flex-wrap: wrap;
+}
+
+.header-nav > a,
+.header-nav > span {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 20px 12px 17px;
+}
+
+.header-nav__deshabilitado {
+  border-bottom: 3px solid transparent;
+  color: var(--neutral-400);
+  font-weight: 400;
+  cursor: default;
+}
+
+.header-derecha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-cuenta {
+  position: relative;
+}
+
+.menu-cuenta {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 240px;
+  background: #ffffff;
+  border: 1px solid var(--neutral-200);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.14);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.menu-cuenta__cabecera {
+  padding: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+.menu-cuenta__avatar-info {
+  min-width: 0;
+}
+
+.menu-cuenta__nombre {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--neutral-950);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-cuenta__correo {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--neutral-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-cuenta__acciones {
+  padding: 8px;
+}
+
+.menu-cuenta__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.menu-cuenta__item:hover {
+  background: var(--neutral-050);
+}
+
+.nav-enlace {
+  border-bottom: 3px solid transparent;
+  color: var(--neutral-600);
+  font-weight: 400;
+}
+
+.nav-enlace--activo {
+  border-bottom-color: var(--acento-500);
+  color: var(--marca-900);
+  font-weight: 600;
+}
+
+.layout-alumno-footer {
+  border-top: 1px solid var(--neutral-200);
+  background: #ffffff;
+  padding: 16px 24px;
+}
+
+.layout-alumno-footer__fila {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--neutral-500);
+}
+
+.layout-alumno-footer__enlaces {
+  display: flex;
+  gap: 16px;
+}
+
+.layout-alumno-footer__enlaces a {
+  color: var(--neutral-500);
+}
+
+// Bajo 1024px el nav (4 ítems) ya no cabe junto al logo y el avatar: en vez de
+// dejar que se apriete y envuelva en 2 líneas desparejas al costado (el avatar
+// terminaba cayendo suelto en una tercera línea), se fuerza a su propia fila
+// completa, con el logo y el avatar juntos arriba.
+@media (max-width: 1023px) {
+  .header-fila {
+    justify-content: space-between;
+  }
+
+  .header-nav {
+    order: 3;
+    flex: 1 1 100%;
+  }
+}
+
+// Bajo 768px ni una fila completa alcanza para los 4 ítems sin volver a
+// envolver: se reemplaza el nav horizontal por un botón de hamburguesa que
+// despliega los mismos enlaces en una lista vertical.
+.header-hamburguesa {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--radio-md);
+  border: 1px solid var(--neutral-200);
+  background: #ffffff;
+  color: var(--neutral-600);
+  cursor: pointer;
+}
+
+.header-hamburguesa:hover {
+  background: var(--neutral-050);
+}
+
+.menu-movil {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 16px 16px;
+  border-top: 1px solid var(--neutral-200);
+}
+
+.menu-movil__item {
+  padding: 12px 10px;
+  border-radius: var(--radio-md);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu-movil__item:hover {
+  background: var(--neutral-050);
+}
+
+.menu-movil__item--activo {
+  color: var(--marca-900);
+  font-weight: 600;
+  background: var(--acento-050);
+}
+
+.menu-movil__item--deshabilitado {
+  color: var(--neutral-400);
+  cursor: default;
+}
+
+.menu-movil__item--deshabilitado:hover {
+  background: none;
+}
+
+@media (max-width: 767px) {
+  .header-nav {
+    display: none;
+  }
+
+  .header-hamburguesa {
+    display: inline-flex;
+  }
+}
