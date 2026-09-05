@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Session } from '../../session/session';
 
 @Component({
@@ -10,12 +10,12 @@ import { Session } from '../../session/session';
 })
 export class LayoutAlumno {
   private readonly session = inject(Session);
-  private readonly router = inject(Router);
   private readonly elementRef = inject(ElementRef);
 
   protected readonly usuario = this.session.usuario;
   protected readonly menuCuentaAbierto = signal(false);
   protected readonly menuMovilAbierto = signal(false);
+  protected readonly errorSesion = signal('');
 
   @HostListener('document:click', ['$event'])
   protected alClicFuera(evento: MouseEvent): void {
@@ -41,8 +41,10 @@ export class LayoutAlumno {
   }
 
   cerrarSesion(): void {
-    this.cerrarMenuCuenta();
-    this.session.cerrarSesion();
-    this.router.navigateByUrl('/');
+    // La cookie HttpOnly solo puede eliminarla el servicio de acceso del servidor.
+    // No simular un cierre borrando únicamente los datos de presentación.
+    this.errorSesion.set(
+      'El cierre de sesión está pendiente de integración con acceso. Tu sesión no se ha cerrado.',
+    );
   }
 }
