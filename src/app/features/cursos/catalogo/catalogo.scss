@@ -227,6 +227,44 @@
   background: #fff;
   color: var(--neutral-800);
 }
+button.catalogo-paginacion__pagina {
+  cursor: pointer;
+  font-family: inherit;
+}
+button.catalogo-paginacion__pagina--activa {
+  border: 1px solid var(--marca-900);
+}
+
+.catalogo-esqueleto {
+  background: linear-gradient(90deg, var(--neutral-100) 25%, var(--neutral-200) 37%, var(--neutral-100) 63%);
+  background-size: 400% 100%;
+  animation: catalogo-esqueleto-brillo 1.4s ease infinite;
+  border-radius: var(--radio-sm);
+}
+.catalogo-esqueleto__linea {
+  height: 14px;
+  margin-bottom: 10px;
+}
+.catalogo-esqueleto__linea--corta {
+  width: 45%;
+}
+.catalogo-esqueleto__linea--media {
+  width: 70%;
+}
+
+@keyframes catalogo-esqueleto-brillo {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+.catalogo-error {
+  align-items: center;
+  gap: 16px;
+}
 
 .catalogo-vacio-icono {
   width: 96px;
