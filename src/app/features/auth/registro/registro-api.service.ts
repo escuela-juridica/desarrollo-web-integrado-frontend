@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_URL } from '../../../core/api/api.config';
 import { UsuarioSesion } from '../../../core/session/session';
 
 import {
@@ -13,7 +14,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class RegistroApiService {
   private readonly http = inject(HttpClient);
-  private readonly urlRegistro = '/api/auth/registro';
+  private readonly urlRegistro = `${API_URL}/auth/registro`;
 
   registrarFormulario(
     peticion: RegistroFormularioPeticion,

@@ -131,6 +131,8 @@
                     Ingresa tus nombres.
                   } @else if (formulario.controls.nombres.hasError('maxlength')) {
                     Los nombres no pueden superar 120 caracteres.
+                  } @else if (formulario.controls.nombres.hasError('pattern')) {
+                    Solo se permiten letras y espacios.
                   }
                 </div>
               }
@@ -161,6 +163,8 @@
                     {{ modoGoogle ? 'Ingresa tus apellidos.' : 'Ingresa tu apellido paterno.' }}
                   } @else if (formulario.controls.apellidoPaterno.hasError('maxlength')) {
                     El apellido paterno no puede superar 80 caracteres.
+                  } @else if (formulario.controls.apellidoPaterno.hasError('pattern')) {
+                    Solo se permiten letras y espacios.
                   }
                 </div>
               }
@@ -187,8 +191,10 @@
                 <div class="campo-error">
                   @if (mensajeErrorServidor('apellidoMaterno'); as mensaje) {
                     {{ mensaje }}
-                  } @else {
+                  } @else if (formulario.controls.apellidoMaterno.hasError('maxlength')) {
                     El apellido materno no puede superar 80 caracteres.
+                  } @else if (formulario.controls.apellidoMaterno.hasError('pattern')) {
+                    Solo se permiten letras y espacios.
                   }
                 </div>
               }
