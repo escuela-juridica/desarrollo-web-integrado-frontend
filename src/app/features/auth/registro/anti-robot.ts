@@ -31,7 +31,17 @@ import { AntiRobotApiService, DesafioAntiRobot } from './anti-robot-api.service'
         {{ desafio() || completado() ? 'Solicitar otra comprobación' : 'No soy robot' }}
       </button>
     </fieldset>
-    <p id="antirobot-estado" role="status" aria-live="polite">{{ mensaje() }}</p>
+    <p
+      id="antirobot-estado"
+      role="status"
+      aria-live="polite"
+      [class.antirobot-estado--exito]="completado()"
+    >
+      @if (completado()) {
+        <span class="antirobot-estado__marca" aria-hidden="true">✓</span>
+      }
+      {{ mensaje() }}
+    </p>
   `,
   styles: `
     :host {
@@ -73,6 +83,28 @@ import { AntiRobotApiService, DesafioAntiRobot } from './anti-robot-api.service'
     button:focus-visible {
       outline: 3px solid #0369a1;
       outline-offset: 2px;
+    }
+    .antirobot-estado--exito {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--exito, #027a48);
+      background: var(--exito-fondo, #ecfdf3);
+      border: 1px solid var(--exito-borde, #abefc6);
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      font-weight: 600;
+    }
+    .antirobot-estado__marca {
+      display: inline-grid;
+      place-items: center;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 999px;
+      background: var(--exito, #027a48);
+      color: #fff;
+      font-size: 0.7rem;
+      flex-shrink: 0;
     }
   `,
 })

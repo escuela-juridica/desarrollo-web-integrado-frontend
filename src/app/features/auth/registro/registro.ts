@@ -37,6 +37,13 @@ const NOMBRES_CAMPOS = [
 
 type NombreCampoRegistro = (typeof NOMBRES_CAMPOS)[number];
 
+const CAMPOS_NOMBRE = ['nombres', 'apellidoPaterno', 'apellidoMaterno'] as const;
+
+// Solo letras (con tildes/Ñ), espacios, apóstrofe y guion. Como el valor se
+// fuerza a mayúsculas al tipear, el patrón solo acepta mayúsculas.
+const PATRON_NOMBRE_REQUERIDO = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ '-]*$/;
+const PATRON_NOMBRE_OPCIONAL = /^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ '-]*)?$/;
+
 @Component({
   selector: 'app-registro',
   imports: [RouterLink, ReactiveFormsModule, AntiRobot],
@@ -70,9 +77,18 @@ export class Registro implements OnInit {
 
   readonly formulario = this.fb.group(
     {
-      nombres: ['', [Validators.required, Validators.maxLength(120)]],
-      apellidoPaterno: ['', [Validators.required, Validators.maxLength(80)]],
-      apellidoMaterno: ['', [Validators.maxLength(80)]],
+      nombres: [
+        '',
+        [Validators.required, Validators.maxLength(120), Validators.pattern(PATRON_NOMBRE_REQUERIDO)],
+      ],
+      apellidoPaterno: [
+        '',
+        [Validators.required, Validators.maxLength(80), Validators.pattern(PATRON_NOMBRE_REQUERIDO)],
+      ],
+      apellidoMaterno: [
+        '',
+        [Validators.maxLength(80), Validators.pattern(PATRON_NOMBRE_OPCIONAL)],
+      ],
       correo: ['', [Validators.required, Validators.email, Validators.maxLength(254)]],
       telefono: ['', [Validators.maxLength(30)]],
       documentoIdentidad: ['', [Validators.maxLength(30)]],
@@ -87,9 +103,25 @@ export class Registro implements OnInit {
   constructor() {
     for (const nombre of NOMBRES_CAMPOS) {
       const control: AbstractControl = this.formulario.controls[nombre];
-      control.valueChanges
-        .pipe(takeUntilDestroyed())
-        .subscribe(() => this.limpiarErrorCampo(nombre));
+      control.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+        this.limpiarErrorCampo(nombre);
+        // Sin Zone.js, Angular no repinta solo al tipear: el checklist de
+        // contraseña y los mensajes de error de campo dependen de esto.
+        this.detector.markForCheck();
+      });
+    }
+
+    // Nombres y apellidos solo aceptan letras: se fuerzan a mayúsculas a
+    // medida que se escribe, para que coincidan con el formato de los
+    // documentos de identidad.
+    for (const nombre of CAMPOS_NOMBRE) {
+      const control = this.formulario.controls[nombre];
+      control.valueChanges.pipe(takeUntilDestroyed()).subscribe((valor) => {
+        const mayuscula = valor.toLocaleUpperCase('es-PE');
+        if (valor !== mayuscula) {
+          control.setValue(mayuscula, { emitEvent: false });
+        }
+      });
     }
   }
 
