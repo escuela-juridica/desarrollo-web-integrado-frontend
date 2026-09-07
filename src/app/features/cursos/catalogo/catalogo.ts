@@ -19,6 +19,13 @@ import { catchError } from 'rxjs/operators';
 import type { Swiper } from 'swiper/types';
 import { CursoApiService } from '../curso-api.service';
 import { CodigoEstadoComercial, CursoTarjeta, Modalidad, OpcionFiltro } from '../curso.model';
+import {
+  claseDisponibilidad,
+  claseModalidad,
+  etiquetaModalidad,
+  formatearFecha,
+  formatearPrecio,
+} from '../curso-formato.util';
 
 const HERO_IMGS = ['img/catalogo/hero-1.jpg', 'img/catalogo/hero-2.jpg', 'img/catalogo/hero-3.jpg'];
 
@@ -161,62 +168,31 @@ export class Catalogo implements OnInit, AfterViewInit {
   }
 
   protected claseModalidad(modalidad: Modalidad | null): string {
-    switch (modalidad) {
-      case 'EN_VIVO':
-        return 'badge--modalidad-vivo';
-      case 'HIBRIDO':
-        return 'badge--modalidad-hibrido';
-      default:
-        return 'badge--modalidad-virtual';
-    }
+    return claseModalidad(modalidad);
   }
 
   protected etiquetaModalidad(modalidad: Modalidad | null): string {
-    switch (modalidad) {
-      case 'EN_VIVO':
-        return 'En vivo';
-      case 'HIBRIDO':
-        return 'Híbrido';
-      default:
-        return 'Virtual';
-    }
+    return etiquetaModalidad(modalidad);
   }
 
   protected claseDisponibilidad(codigo: CodigoEstadoComercial): string {
-    switch (codigo) {
-      case 'IMMEDIATE_START':
-        return 'badge--disp-inmediato';
-      case 'ENROLLMENT_CLOSED':
-      case 'NO_CAPACITY':
-        return 'badge--disp-cerrado';
-      default:
-        return 'badge--disp-proximo';
-    }
+    return claseDisponibilidad(codigo);
   }
 
   protected etiquetaDisponibilidad(curso: CursoTarjeta): string {
     const estado = curso.estadoComercial;
     if (estado.codigo === 'UPCOMING' && estado.fechaInicio) {
-      return `Inicia el ${this.formatearFecha(estado.fechaInicio)}`;
+      return `Inicia el ${formatearFecha(estado.fechaInicio)}`;
     }
     return estado.etiqueta;
   }
 
   protected formatearFecha(fecha: string): string {
-    return new Intl.DateTimeFormat('es-PE', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      timeZone: 'America/Lima',
-    }).format(new Date(`${fecha}T12:00:00`));
+    return formatearFecha(fecha);
   }
 
   protected formatearPrecio(monto: number): string {
-    return new Intl.NumberFormat('es-PE', {
-      style: 'currency',
-      currency: 'PEN',
-      minimumFractionDigits: 2,
-    }).format(monto);
+    return formatearPrecio(monto);
   }
 
   protected fondoTarjeta(imagen: string | null): string {

@@ -64,3 +64,73 @@ export interface CriteriosCatalogo {
   pagina: number;
   tamano: number;
 }
+
+export type TipoLeccion = 'GRABADA' | 'EN_VIVO';
+
+export interface DocenteFicha {
+  personaId: number;
+  nombreCompleto: string;
+  fotoUrl: string | null;
+  cargoProfesional: string | null;
+  biografiaProfesional: string | null;
+}
+
+export interface LeccionFicha {
+  leccionId: number;
+  titulo: string;
+  orden: number;
+  tipo: TipoLeccion;
+  estado: string;
+  esVistaPrevia: boolean;
+  fechaHoraInicio: string | null;
+  fechaHoraFin: string | null;
+  duracionSegundos: number | null;
+}
+
+export interface ModuloFicha {
+  moduloId: number;
+  titulo: string;
+  descripcion: string | null;
+  orden: number;
+  lecciones: LeccionFicha[];
+}
+
+export interface FichaCursoDetalle {
+  urlAmigable: string;
+  titulo: string;
+  descripcion: string | null;
+  imagenPortadaUrl: string | null;
+  modalidad: Modalidad | null;
+  tipoVenta: TipoVenta | null;
+  tipoCursoCodigo: string | null;
+  tipoCursoNombre: string | null;
+  categoriaCodigo: string | null;
+  categoriaNombre: string | null;
+  entidadCertificadoraNombre: string | null;
+  entidadCertificadoraLogoUrl: string | null;
+  horasAcademicas: number | null;
+  beneficios: string[];
+  fechaInicio: string | null;
+  fechaFin: string | null;
+  docentes: DocenteFicha[];
+  modulos: ModuloFicha[];
+  estadoComercial: EstadoComercial;
+}
+
+export interface RecursoVistaPrevia {
+  materialLeccionId: number;
+  titulo: string;
+  orden: number;
+  tipoRecurso: string;
+  origen: string;
+  referencia: string;
+  nombreArchivo: string | null;
+  tipoMime: string | null;
+  duracionSegundos: number | null;
+  permiteDescarga: boolean;
+}
+
+export interface VistaPrevia {
+  leccionId: number;
+  materiales: RecursoVistaPrevia[];
+}

@@ -13,7 +13,7 @@ export const routes: Routes = [
           import('./features/cursos/catalogo/catalogo').then((m) => m.Catalogo),
       }, // PF-001
       {
-        path: 'cursos/:id',
+        path: 'cursos/:urlAmigable',
         loadComponent: () =>
           import('./features/cursos/ficha-curso/ficha-curso').then((m) => m.FichaCurso),
       }, // PF-002
