@@ -3,7 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL } from '../../core/api/api.config';
 import { PageResponse } from '../../core/api/page-response.model';
-import { CriteriosCatalogo, CursoTarjeta, FiltrosCurso } from './curso.model';
+import {
+  CriteriosCatalogo,
+  CursoTarjeta,
+  FichaCursoDetalle,
+  FiltrosCurso,
+  VistaPrevia,
+} from './curso.model';
 
 @Injectable({ providedIn: 'root' })
 export class CursoApiService {
@@ -29,5 +35,15 @@ export class CursoApiService {
 
   filtros(): Observable<FiltrosCurso> {
     return this.http.get<FiltrosCurso>(`${API_URL}/publico/cursos/filtros`);
+  }
+
+  detalle(urlAmigable: string): Observable<FichaCursoDetalle> {
+    return this.http.get<FichaCursoDetalle>(`${API_URL}/publico/cursos/${urlAmigable}`);
+  }
+
+  vistaPrevia(urlAmigable: string, leccionId: number): Observable<VistaPrevia> {
+    return this.http.get<VistaPrevia>(
+      `${API_URL}/publico/cursos/${urlAmigable}/lecciones/${leccionId}/vista-previa`,
+    );
   }
 }
