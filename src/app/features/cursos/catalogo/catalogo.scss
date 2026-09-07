@@ -1,5 +1,11 @@
 // PF-001 · Estilos propios de esta pantalla.
 
+.catalogo-ancla {
+  // Respaldo para la cabecera de escritorio, incluido su borde.
+  // Al paginar se ajusta a la altura real del header (tambien en movil).
+  scroll-margin-top: 73px;
+}
+
 .hero-catalogo {
   color: #ffffff;
   padding: 64px 24px;

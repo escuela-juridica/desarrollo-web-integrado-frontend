@@ -11,7 +11,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
@@ -52,8 +52,12 @@ export class Catalogo implements OnInit, AfterViewInit {
   protected readonly totalPaginas = signal(0);
   protected readonly estado = signal<EstadoPantalla>('cargando');
 
+  private readonly valoresFiltros = toSignal(this.filtros.valueChanges, {
+    initialValue: this.filtros.getRawValue(),
+  });
+
   protected readonly hayFiltrosAplicados = computed(() => {
-    const valores = this.filtros.getRawValue();
+    const valores = this.valoresFiltros();
     return valores.texto !== '' || valores.tipo !== '' || valores.categoria !== '';
   });
 
@@ -62,6 +66,7 @@ export class Catalogo implements OnInit, AfterViewInit {
   );
 
   private readonly recargar = new Subject<void>();
+  private readonly anclaCatalogo = viewChild<ElementRef<HTMLElement>>('anclaCatalogo');
 
   ngOnInit(): void {
     this.cursoApi
@@ -128,6 +133,14 @@ export class Catalogo implements OnInit, AfterViewInit {
     }
     this.pagina.set(pagina);
     this.recargar.next();
+    const ancla = this.anclaCatalogo()?.nativeElement;
+    if (ancla) {
+      const cabecera = ancla.ownerDocument.querySelector('header');
+      // El contenedor comienza justo al terminar el banner. Reservamos solo
+      // la cabecera fija; el padding del contenedor separa los filtros.
+      ancla.style.scrollMarginTop = `${cabecera?.getBoundingClientRect().height ?? 0}px`;
+      ancla.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   protected paginaAnterior(): void {
