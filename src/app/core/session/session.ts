@@ -8,8 +8,8 @@ export interface UsuarioSesion {
 
 /**
  * Estado de la sesion actual. HU-001: login con correo o Google.
- * La logica real (llamada al backend, guardado de token) se agrega junto con esa historia;
- * esto solo deja el punto unico que el guard y el header ya pueden consultar.
+ * Datos de presentación recibidos desde el servidor. La credencial vive en una
+ * cookie HttpOnly; no se guarda el JWT en localStorage ni en este servicio.
  */
 @Injectable({
   providedIn: 'root',
