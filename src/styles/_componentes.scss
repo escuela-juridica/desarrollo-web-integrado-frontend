@@ -722,6 +722,22 @@
   }
 }
 
+.catalogo-esqueleto {
+  background: linear-gradient(90deg, var(--neutral-100) 25%, var(--neutral-200) 37%, var(--neutral-100) 63%);
+  background-size: 400% 100%;
+  animation: catalogo-esqueleto-brillo 1.4s ease infinite;
+  border-radius: var(--radio-sm);
+}
+
+@keyframes catalogo-esqueleto-brillo {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
 // ------------------------------------------------------------- Responsivo ---
 // Reglas transversales para que ningun bloque copiado del prototipo desborde
 // un viewport angosto (320-375px), sin tener que reescribir cada pantalla.

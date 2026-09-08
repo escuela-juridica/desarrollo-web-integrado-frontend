@@ -1,13 +1,19 @@
 <!-- Encabezado y pie del área del alumno (EP01: PF-008 y PF-009). Mockup fiel al prototipo. -->
 <header>
   <div class="header-fila">
-    <a routerLink="/app/panel"><img src="img/logo-esejur.png" alt="Escuela Jurídica" class="header-logo" /></a>
+    <a routerLink="/app/panel"
+      ><img src="img/logo-esejur.png" alt="Escuela Jurídica" class="header-logo"
+    /></a>
     <nav class="header-nav">
-      <a routerLink="/app/panel" routerLinkActive="nav-enlace--activo" class="nav-enlace">Mis cursos</a>
+      <a routerLink="/app/panel" routerLinkActive="nav-enlace--activo" class="nav-enlace"
+        >Mis cursos</a
+      >
       <!-- Calendario y Mis certificados pertenecen a EP03/EP04: fuera del alcance de este mockup -->
       <span class="header-nav__deshabilitado">Calendario</span>
       <span class="header-nav__deshabilitado">Mis certificados</span>
-      <a routerLink="/app/perfil" routerLinkActive="nav-enlace--activo" class="nav-enlace">Mi perfil</a>
+      <a routerLink="/app/perfil" routerLinkActive="nav-enlace--activo" class="nav-enlace"
+        >Mi perfil</a
+      >
     </nav>
     <div class="header-derecha">
       <button
@@ -18,7 +24,15 @@
         [attr.aria-expanded]="menuMovilAbierto()"
         (click)="toggleMenuMovil()"
       >
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
           <line x1="3" y1="6" x2="21" y2="6" />
           <line x1="3" y1="12" x2="21" y2="12" />
           <line x1="3" y1="18" x2="21" y2="18" />
@@ -38,15 +52,26 @@
         @if (menuCuentaAbierto()) {
           <div class="menu-cuenta">
             <div class="menu-cuenta__cabecera">
-              <span class="avatar avatar--sm avatar--cuenta" style="flex: 0 0 36px">{{ usuario()?.nombre ? usuario()!.nombre.slice(0, 2).toUpperCase() : 'LC' }}</span>
+              <span class="avatar avatar--sm avatar--cuenta" style="flex: 0 0 36px">{{
+                usuario()?.nombre ? usuario()!.nombre.slice(0, 2).toUpperCase() : 'LC'
+              }}</span>
               <div class="menu-cuenta__avatar-info">
                 <div class="menu-cuenta__nombre">{{ usuario()?.nombre || 'Lucía Caminos' }}</div>
-                <div class="menu-cuenta__correo">{{ usuario()?.email || 'lucia.caminos@esejur.pe' }}</div>
+                <div class="menu-cuenta__correo">
+                  {{ usuario()?.email || 'lucia.caminos@esejur.pe' }}
+                </div>
               </div>
             </div>
             <div class="menu-cuenta__acciones">
-              <a routerLink="/app/perfil" (click)="cerrarMenuCuenta()" class="menu-cuenta__item">Mi perfil</a>
-              <button type="button" (click)="cerrarSesion()" class="menu-cuenta__item">Cerrar sesión</button>
+              <a routerLink="/app/perfil" (click)="cerrarMenuCuenta()" class="menu-cuenta__item"
+                >Mi perfil</a
+              >
+              <button type="button" (click)="cerrarSesion()" class="menu-cuenta__item">
+                Cerrar sesión
+              </button>
+              @if (errorSesion()) {
+                <p role="alert">{{ errorSesion() }}</p>
+              }
             </div>
           </div>
         }
@@ -56,11 +81,23 @@
 
   @if (menuMovilAbierto()) {
     <nav class="menu-movil">
-      <a routerLink="/app/panel" routerLinkActive="menu-movil__item--activo" class="menu-movil__item" (click)="cerrarMenuMovil()">Mis cursos</a>
+      <a
+        routerLink="/app/panel"
+        routerLinkActive="menu-movil__item--activo"
+        class="menu-movil__item"
+        (click)="cerrarMenuMovil()"
+        >Mis cursos</a
+      >
       <!-- Calendario y Mis certificados pertenecen a EP03/EP04: fuera del alcance de este mockup -->
       <span class="menu-movil__item menu-movil__item--deshabilitado">Calendario</span>
       <span class="menu-movil__item menu-movil__item--deshabilitado">Mis certificados</span>
-      <a routerLink="/app/perfil" routerLinkActive="menu-movil__item--activo" class="menu-movil__item" (click)="cerrarMenuMovil()">Mi perfil</a>
+      <a
+        routerLink="/app/perfil"
+        routerLinkActive="menu-movil__item--activo"
+        class="menu-movil__item"
+        (click)="cerrarMenuMovil()"
+        >Mi perfil</a
+      >
     </nav>
   }
 </header>
