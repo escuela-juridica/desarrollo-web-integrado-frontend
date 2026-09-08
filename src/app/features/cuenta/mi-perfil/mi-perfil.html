@@ -7,8 +7,111 @@
      pone <app-layout-alumno> por afuera (compartido con Panel, PF-008). El
      checklist de requisitos usa la clase global .requisito-pass, tampoco
      se copia. -->
-<div class="pantalla-pendiente">
-  <a routerLink="/catalogo" class="pantalla-pendiente__volver">&larr; Volver al inicio</a>
-  <p class="pantalla-pendiente__codigo">PF-009 · Mi perfil</p>
-  <p>Pegar acá el contenido de <code>&lt;main&gt;</code> de <code>maquetacion-html/HU-005-PF-009-mi-perfil.html</code>.</p>
-</div>
+
+<main>
+  <div class="contenedor">
+    <div class="eyebrow"><span class="eyebrow__dash"></span><span class="eyebrow__texto">Tu cuenta</span></div>
+    <h1 class="tipo-h1 perfil-titulo">Mi perfil</h1>
+
+    <div class="perfil-layout">
+      <div class="perfil-sidebar">
+        <div class="card perfil-tarjeta-usuario">
+          <span class="avatar avatar--lg avatar--marca" style="margin: 0 auto 16px">LC</span>
+          <div class="perfil-tarjeta-usuario__nombre">Lucía Caminos Quiroz</div>
+          <div class="perfil-tarjeta-usuario__correo">lucia.caminos@esejur.pe</div>
+        </div>
+        <div class="card perfil-tabs">
+          <div class="perfil-tab perfil-tab--activa">Datos personales</div>
+          <div class="perfil-tab">Seguridad</div>
+        </div>
+      </div>
+
+      <div class="perfil-contenido">
+        <div class="card card--acento-superior">
+          <h2>Datos personales</h2>
+          <div class="alerta alerta--error perfil-alerta">
+            <span class="alerta__icono">!</span>
+            <div class="alerta__titulo">No pudimos guardar tus datos. Revisa los campos marcados abajo.</div>
+          </div>
+          <div class="perfil-campos">
+            <div>
+              <label class="label"><span>Nombres</span></label>
+              <input class="input" value="Lucía" />
+            </div>
+            <div>
+              <label class="label"><span>Apellido paterno</span></label>
+              <input class="input" value="Caminos" />
+            </div>
+            <div>
+              <label class="label"><span>Apellido materno</span><span class="nota-pill">Opcional</span></label>
+              <input class="input" value="Quiroz" />
+            </div>
+            <div>
+              <label class="label"><span>Correo electrónico</span><span class="nota-pill nota-pill--neutra">No
+                  editable</span></label>
+              <input class="input input--solo-lectura" value="lucia.caminos@esejur.pe" readonly />
+            </div>
+            <div>
+              <label class="label"><span>Teléfono/Celular</span><span class="nota-pill">Opcional</span></label>
+              <input class="input" placeholder="999 999 999" />
+            </div>
+            <div>
+              <label class="label"><span>Documento de identidad</span><span class="nota-pill">Opcional</span></label>
+              <input class="input" placeholder="45781203" />
+              <div class="field-hint campo-ayuda-dorada">No se usa para emitir el certificado.</div>
+            </div>
+          </div>
+          <div class="perfil-guardado">✓ Cambios guardados.</div>
+          <div class="perfil-acciones">
+            <button type="button" class="btn btn--primario">Guardar cambios</button>
+          </div>
+        </div>
+
+        <!-- Estado alterno: pestaña Seguridad -->
+        <p class="pantalla-pendiente__codigo" style="margin: 40px 0 16px">Estado alterno · Pestaña Seguridad</p>
+        <div class="card card--acento-superior perfil-seguridad">
+          <h2>Cambiar contraseña</h2>
+          <p class="perfil-seguridad__texto">Tu correo de acceso no se modifica desde esta sección.</p>
+          <div class="perfil-seguridad__exito">✓ Tu contraseña se actualizó correctamente.</div>
+          <div class="perfil-seguridad__formulario">
+            <div>
+              <label class="label">Contraseña actual</label>
+              <div class="input-con-accion">
+                <input class="input input--error" type="password" placeholder="Tu contraseña actual" />
+                <button type="button" class="btn btn--neutro">Mostrar</button>
+              </div>
+              <div class="campo-error">La contraseña actual no es correcta.</div>
+            </div>
+            <div>
+              <label class="label">Nueva contraseña</label>
+              <div class="input-con-accion">
+                <input class="input input--error" type="password" placeholder="Mínimo 8 caracteres" />
+                <button type="button" class="btn btn--neutro">Mostrar</button>
+              </div>
+              <div class="campo-error">La nueva contraseña no cumple los requisitos.</div>
+              <div class="requisitos-pass-lista requisitos-pass-lista--horizontal">
+                <div class="requisito-pass requisito-pass--sm"><span class="requisito-pass__marca">○</span><span>Al
+                    menos 8 caracteres</span></div>
+                <div class="requisito-pass requisito-pass--sm"><span class="requisito-pass__marca">○</span><span>Una
+                    letra mayúscula</span></div>
+                <div class="requisito-pass requisito-pass--sm"><span class="requisito-pass__marca">○</span><span>Una
+                    letra minúscula</span></div>
+                <div class="requisito-pass requisito-pass--sm"><span class="requisito-pass__marca">○</span><span>Un
+                    número</span></div>
+              </div>
+            </div>
+            <div>
+              <label class="label">Repetir nueva contraseña</label>
+              <div class="input-con-accion">
+                <input class="input input--error" type="password" placeholder="Vuelve a escribirla" />
+                <button type="button" class="btn btn--neutro">Mostrar</button>
+              </div>
+              <div class="campo-error">Las contraseñas no coinciden.</div>
+            </div>
+            <button type="button" class="btn btn--grande btn--primario">Guardar nueva contraseña</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
