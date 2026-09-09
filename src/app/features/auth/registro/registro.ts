@@ -13,6 +13,7 @@ import { finalize } from 'rxjs';
 import { RegistroApiService } from './registro-api.service';
 import { AntiRobot } from './anti-robot';
 import { WHATSAPP_REGISTRO, enlaceAyudaRegistro } from './registro-contacto';
+import { BotonGooglePendiente } from '../../../shared/ui/boton-google-pendiente/boton-google-pendiente';
 import { Session } from '../../../core/session/session';
 import {
   ApiErrorRespuesta,
@@ -46,7 +47,7 @@ const PATRON_NOMBRE_OPCIONAL = /^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ '-]*)?$/
 
 @Component({
   selector: 'app-registro',
-  imports: [RouterLink, ReactiveFormsModule, AntiRobot],
+  imports: [RouterLink, ReactiveFormsModule, AntiRobot, BotonGooglePendiente],
   templateUrl: './registro.html',
   styleUrl: './registro.scss',
 })
@@ -345,7 +346,11 @@ export class Registro implements OnInit {
       .subscribe({
         next: (usuario) => {
           this.cuentaCreada = true;
-          this.sesion.iniciarSesion(usuario);
+          this.sesion.iniciarSesion({
+            nombreCompleto: usuario.nombre,
+            correo: usuario.email,
+            rolPrincipal: usuario.rol === 'administrador' ? 'ADMINISTRADOR' : 'ALUMNO',
+          });
           void this.router.navigate(['/app/panel']);
         },
         error: (error: HttpErrorResponse) => this.manejarErrorRegistro(error),

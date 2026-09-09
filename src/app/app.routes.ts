@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { sessionGuard } from './core/session/session-guard';
+
 export const routes: Routes = [
   {
     path: '',
@@ -69,6 +71,7 @@ export const routes: Routes = [
   },
   {
     path: 'app',
+    canActivate: [sessionGuard],
     loadComponent: () =>
       import('./core/layout/layout-alumno/layout-alumno').then((m) => m.LayoutAlumno),
     children: [

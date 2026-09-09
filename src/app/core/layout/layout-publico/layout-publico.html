@@ -1,11 +1,55 @@
-<!-- Encabezado y pie del portal público (EP01, sin sesión). Mockup fiel al prototipo. -->
+<!-- Encabezado y pie del portal público (EP01). Muestra "Iniciar sesión"/"Crear cuenta" a un
+     visitante; con sesión activa (p. ej. un alumno que vuelve al catálogo) muestra su cuenta,
+     igual que hace <app-layout-alumno> bajo /app. -->
 <header>
   <div class="header-fila">
     <a routerLink="/catalogo"><img src="img/logo-esejur.png" alt="Escuela Jurídica" class="header-logo" /></a>
-    <div class="header-acciones">
-      <button type="button" class="btn btn--secundario" routerLink="/acceso">Iniciar sesión</button>
-      <button type="button" class="btn btn--primario" routerLink="/registro">Crear cuenta</button>
-    </div>
+
+    @if (estaAutenticado()) {
+      <div class="header-acciones">
+        <div class="header-cuenta">
+          <button
+            type="button"
+            class="avatar avatar--md avatar--cuenta"
+            style="padding: 0"
+            aria-haspopup="true"
+            [attr.aria-expanded]="menuCuentaAbierto()"
+            (click)="toggleMenuCuenta()"
+          >
+            {{ iniciales }}
+          </button>
+          @if (menuCuentaAbierto()) {
+            <div class="menu-cuenta">
+              <div class="menu-cuenta__cabecera">
+                <span class="avatar avatar--sm avatar--cuenta" style="flex: 0 0 36px">{{ iniciales }}</span>
+                <div class="menu-cuenta__avatar-info">
+                  <div class="menu-cuenta__nombre">{{ usuario()?.nombreCompleto }}</div>
+                  <div class="menu-cuenta__correo">{{ usuario()?.correo }}</div>
+                </div>
+              </div>
+              <div class="menu-cuenta__acciones">
+                @if (usuario()?.rolPrincipal === 'ALUMNO') {
+                  <a routerLink="/app/panel" (click)="cerrarMenuCuenta()" class="menu-cuenta__item"
+                    >Mis cursos</a
+                  >
+                  <a routerLink="/app/perfil" (click)="cerrarMenuCuenta()" class="menu-cuenta__item"
+                    >Mi perfil</a
+                  >
+                }
+                <button type="button" (click)="cerrarSesion()" class="menu-cuenta__item">
+                  Cerrar sesión
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="header-acciones">
+        <button type="button" class="btn btn--secundario" routerLink="/acceso">Iniciar sesión</button>
+        <button type="button" class="btn btn--primario" routerLink="/registro">Crear cuenta</button>
+      </div>
+    }
   </div>
 </header>
 

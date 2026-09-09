@@ -9,7 +9,7 @@
 <main>
   <div class="contenedor">
     <div class="eyebrow"><span class="eyebrow__dash"></span><span class="eyebrow__texto">Tu panel</span></div>
-    <h1 class="tipo-h1 panel-titulo">Hola, {{ usuario()?.nombre || 'estudiante' }}</h1>
+    <h1 class="tipo-h1 panel-titulo">Hola, {{ primerNombre || 'estudiante' }}</h1>
     
     @if (cursosActivos.length > 0) {
       <p class="panel-subtitulo">Tienes {{ cursosActivos.length }} {{ cursosActivos.length === 1 ? 'curso activo' : 'cursos activos' }}.</p>

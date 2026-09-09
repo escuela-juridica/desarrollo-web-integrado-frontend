@@ -1,7 +1,7 @@
 <!-- Encabezado y pie del área del alumno (EP01: PF-008 y PF-009). Mockup fiel al prototipo. -->
 <header>
   <div class="header-fila">
-    <a routerLink="/app/panel"
+    <a routerLink="/catalogo"
       ><img src="img/logo-esejur.png" alt="Escuela Jurídica" class="header-logo"
     /></a>
     <nav class="header-nav">
@@ -47,18 +47,18 @@
           [attr.aria-expanded]="menuCuentaAbierto()"
           (click)="toggleMenuCuenta()"
         >
-          {{ usuario()?.nombre ? usuario()!.nombre.slice(0, 2).toUpperCase() : 'LC' }}
+          {{ iniciales }}
         </button>
         @if (menuCuentaAbierto()) {
           <div class="menu-cuenta">
             <div class="menu-cuenta__cabecera">
-              <span class="avatar avatar--sm avatar--cuenta" style="flex: 0 0 36px">{{
-                usuario()?.nombre ? usuario()!.nombre.slice(0, 2).toUpperCase() : 'LC'
-              }}</span>
+              <span class="avatar avatar--sm avatar--cuenta" style="flex: 0 0 36px">{{ iniciales }}</span>
               <div class="menu-cuenta__avatar-info">
-                <div class="menu-cuenta__nombre">{{ usuario()?.nombre || 'Lucía Caminos' }}</div>
+                <div class="menu-cuenta__nombre">
+                  {{ usuario()?.nombreCompleto || 'Lucía Caminos' }}
+                </div>
                 <div class="menu-cuenta__correo">
-                  {{ usuario()?.email || 'lucia.caminos@esejur.pe' }}
+                  {{ usuario()?.correo || 'lucia.caminos@esejur.pe' }}
                 </div>
               </div>
             </div>
