@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL } from '../../../core/api/api.config';
-import { UsuarioSesion } from '../../../core/session/session';
 
 import {
   ContextoRegistroGoogle,
+  GoogleRegistroSesion,
   RegistroFormularioPeticion,
   RegistroFormularioRespuesta,
   RegistroGooglePeticion,
@@ -27,7 +27,7 @@ export class RegistroApiService {
     return this.http.get<ContextoRegistroGoogle>(`${this.urlRegistro}/google/${referenciaSegura}`);
   }
 
-  completarRegistroGoogle(peticion: RegistroGooglePeticion): Observable<UsuarioSesion> {
-    return this.http.post<UsuarioSesion>(`${this.urlRegistro}/google`, peticion);
+  completarRegistroGoogle(peticion: RegistroGooglePeticion): Observable<GoogleRegistroSesion> {
+    return this.http.post<GoogleRegistroSesion>(`${this.urlRegistro}/google`, peticion);
   }
 }

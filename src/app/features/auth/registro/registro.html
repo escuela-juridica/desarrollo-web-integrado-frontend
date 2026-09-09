@@ -43,12 +43,7 @@
       </p>
 
       @if (!modoGoogle) {
-        <button type="button" class="btn btn--neutro" disabled aria-describedby="google-pendiente">
-          Continuar con Google
-        </button>
-        <p id="google-pendiente">
-          El inicio con Google está pendiente de integración con el módulo de acceso.
-        </p>
+        <app-boton-google-pendiente mensaje="El registro con Google todavía no está disponible." />
         <div class="divisor-con-texto registro-divisor">
           <span class="divisor-con-texto__linea"></span>o completa el formulario<span
             class="divisor-con-texto__linea"
@@ -222,7 +217,7 @@
                 autocomplete="email"
                 inputmode="email"
                 maxlength="254"
-                placeholder="nombre@entidad.gob.pe"
+                placeholder="nombre@correo.com"
                 [readonly]="modoGoogle"
                 [class.input--solo-lectura]="modoGoogle"
                 [class.input--error]="campoInvalido('correo')"
@@ -289,8 +284,6 @@
                 [class.input--error]="campoInvalido('documentoIdentidad')"
                 [attr.aria-invalid]="campoInvalido('documentoIdentidad')"
               />
-
-              <div class="field-hint campo-ayuda-dorada">No se usa para emitir el certificado.</div>
 
               @if (campoInvalido('documentoIdentidad')) {
                 <div class="campo-error">

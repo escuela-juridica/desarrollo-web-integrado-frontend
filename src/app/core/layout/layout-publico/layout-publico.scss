@@ -32,6 +32,77 @@ header {
   margin-left: auto;
 }
 
+.header-cuenta {
+  position: relative;
+}
+
+.menu-cuenta {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 240px;
+  background: #ffffff;
+  border: 1px solid var(--neutral-200);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.14);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.menu-cuenta__cabecera {
+  padding: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+.menu-cuenta__avatar-info {
+  min-width: 0;
+}
+
+.menu-cuenta__nombre {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--neutral-950);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-cuenta__correo {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--neutral-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-cuenta__acciones {
+  padding: 8px;
+}
+
+.menu-cuenta__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--neutral-600);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.menu-cuenta__item:hover {
+  background: var(--neutral-050);
+}
+
 @media (max-width: 480px) {
   // El logo + los dos botones no caben en una fila a 320-375px: en vez de
   // dejar que el auto-margin los empuje a un lado de forma rara al envolver,

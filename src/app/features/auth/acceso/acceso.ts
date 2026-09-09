@@ -1,15 +1,21 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 
+import { BotonGooglePendiente } from '../../../shared/ui/boton-google-pendiente/boton-google-pendiente';
 import { Session } from '../../../core/session/session';
 import { AccesoApiService } from './acceso-api.service';
 
+interface ErrorApiAcceso {
+  code?: string;
+  message?: string;
+}
+
 @Component({
   selector: 'app-acceso',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, BotonGooglePendiente],
   templateUrl: './acceso.html',
   styleUrl: './acceso.scss',
 })
@@ -17,11 +23,18 @@ export class Acceso {
   private readonly accesoApi = inject(AccesoApiService);
   private readonly session = inject(Session);
   private readonly router = inject(Router);
+  private readonly detector = inject(ChangeDetectorRef);
 
   credenciales = { correo: '', contrasena: '' };
   mostrarPassword = false;
   cargando = false;
   mensajeError = '';
+  mensajeInfo = this.leerMensajeInfo();
+
+  private leerMensajeInfo(): string {
+    const estadoNavegacion = history.state as { mensajeInfo?: unknown } | null;
+    return typeof estadoNavegacion?.mensajeInfo === 'string' ? estadoNavegacion.mensajeInfo : '';
+  }
 
   onLogin(): void {
     if (this.cargando || !this.credenciales.correo.trim() || !this.credenciales.contrasena) {
@@ -30,39 +43,47 @@ export class Acceso {
 
     this.cargando = true;
     this.mensajeError = '';
-    this.accesoApi
-      .login({
-        correo: this.credenciales.correo.trim().toLowerCase(),
-        contrasena: this.credenciales.contrasena,
-      })
-      .pipe(finalize(() => (this.cargando = false)))
-      .subscribe({
-        next: (respuesta) => {
-          this.session.iniciarSesion({
-            nombre: respuesta.nombreCompleto,
-            email: respuesta.correo,
-            rol: 'alumno',
-          });
-          void this.router.navigate(['/app/panel']);
-        },
-        error: (error: HttpErrorResponse) => {
-          this.mensajeError = this.obtenerMensajeError(error);
-        },
-      });
-  }
+    const correo = this.credenciales.correo.trim().toLowerCase();
 
-  loginConGoogle(): void {
-    this.mensajeError = 'El acceso con Google todavía no está disponible.';
+    this.accesoApi
+      .acceder({ correo, contrasena: this.credenciales.contrasena })
+      .pipe(
+        finalize(() => {
+          this.cargando = false;
+          this.detector.markForCheck();
+        }),
+      )
+      .subscribe({
+        next: (usuario) => {
+          this.session.iniciarSesion(usuario);
+          this.navegarSegunRol(usuario.rolPrincipal);
+        },
+        error: (error: HttpErrorResponse) => this.manejarError(error, correo),
+      });
   }
 
   togglePassword(): void {
     this.mostrarPassword = !this.mostrarPassword;
   }
 
-  private obtenerMensajeError(error: HttpErrorResponse): string {
-    const mensaje = error.error?.message;
-    return typeof mensaje === 'string' && mensaje.trim()
-      ? mensaje
-      : 'El correo o la contraseña no son correctos.';
+  private navegarSegunRol(rol: 'ALUMNO' | 'ADMINISTRADOR'): void {
+    // HU-008: por ahora el panel de administrador solo tiene "Usuarios" implementado.
+    void this.router.navigate([rol === 'ADMINISTRADOR' ? '/admin/usuarios' : '/app/panel']);
+  }
+
+  private manejarError(error: HttpErrorResponse, correo: string): void {
+    const cuerpo = this.obtenerErrorApi(error);
+    if (cuerpo?.code === 'PENDING_EMAIL_VERIFICATION') {
+      void this.router.navigate(['/verificar-correo'], { state: { correo } });
+      return;
+    }
+    this.mensajeError = cuerpo?.message?.trim() || 'El correo o la contraseña no son correctos.';
+  }
+
+  private obtenerErrorApi(error: HttpErrorResponse): ErrorApiAcceso | null {
+    if (typeof error.error !== 'object' || error.error === null) {
+      return null;
+    }
+    return error.error as ErrorApiAcceso;
   }
 }

@@ -3,25 +3,27 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { API_URL } from '../../../core/api/api.config';
+import { UsuarioSesion } from '../../../core/session/session';
 
-export interface LoginPeticion {
+export interface AccesoPeticion {
   correo: string;
   contrasena: string;
-}
-
-export interface LoginRespuesta {
-  token: string;
-  nombreCompleto: string;
-  correo: string;
-  fotoUrl: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AccesoApiService {
   private readonly http = inject(HttpClient);
-  private readonly urlAcceso = `${API_URL}/auth/login`;
+  private readonly urlAuth = `${API_URL}/auth`;
 
-  login(peticion: LoginPeticion): Observable<LoginRespuesta> {
-    return this.http.post<LoginRespuesta>(this.urlAcceso, peticion);
+  acceder(peticion: AccesoPeticion): Observable<UsuarioSesion> {
+    return this.http.post<UsuarioSesion>(`${this.urlAuth}/acceso`, peticion);
+  }
+
+  sesion(): Observable<UsuarioSesion> {
+    return this.http.get<UsuarioSesion>(`${this.urlAuth}/sesion`);
+  }
+
+  cerrar(): Observable<void> {
+    return this.http.post<void>(`${this.urlAuth}/cierre`, {});
   }
 }

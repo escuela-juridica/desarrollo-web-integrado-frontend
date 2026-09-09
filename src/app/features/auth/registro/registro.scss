@@ -116,12 +116,9 @@
   margin: 0 0 24px;
 }
 
-.registro-boton-google {
+app-boton-google-pendiente {
+  display: block;
   margin-bottom: 20px;
-}
-
-.registro-boton-google:hover {
-  text-decoration: none;
 }
 
 .registro-divisor {
@@ -218,15 +215,6 @@
   line-height: 20px;
   font-weight: 600;
   color: var(--acento-700);
-}
-
-.requisito-pass--cumplido {
-  color: var(--exito);
-}
-
-.requisito-pass--cumplido .requisito-pass__marca {
-  background: var(--exito-fondo);
-  color: var(--exito);
 }
 
 @media (max-width: 767px) {

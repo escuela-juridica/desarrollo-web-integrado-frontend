@@ -1,9 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 import { routes } from './app.routes';
 import { credencialesInterceptor } from './core/interceptors/credenciales.interceptor';
+import { Session } from './core/session/session';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +20,6 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
     ),
+    provideAppInitializer(() => firstValueFrom(inject(Session).restaurar())),
   ],
 };

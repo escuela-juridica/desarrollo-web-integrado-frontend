@@ -47,6 +47,13 @@ export interface RegistroGooglePeticion {
   aceptaTerminos: boolean;
 }
 
+/** Forma actual de HU-002 al completar Google; no coincide con el perfil de sesión de HU-001. */
+export interface GoogleRegistroSesion {
+  nombre: string;
+  email: string;
+  rol: 'alumno' | 'administrador';
+}
+
 export interface ErrorCampoApi {
   field: string;
   message: string;

@@ -25,4 +25,8 @@ export class Panel {
 
   readonly usuario = this.session.usuario;
   readonly cursosActivos: CursoActivo[] = [];
+
+  protected get primerNombre(): string {
+    return this.usuario()?.nombreCompleto?.trim().split(/\s+/)[0] ?? '';
+  }
 }

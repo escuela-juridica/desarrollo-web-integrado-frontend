@@ -1,0 +1,43 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <img src="img/logo-esejur.png" alt="Escuela Jurídica" class="admin-sidebar__logo" />
+
+    <nav class="admin-sidebar__nav">
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Dashboard</span>
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Cursos</span>
+      <a
+        routerLink="/admin/usuarios"
+        routerLinkActive="admin-sidebar__item--activo"
+        class="admin-sidebar__item"
+        >Usuarios</a
+      >
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Matrículas y pagos</span>
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Operación académica</span>
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Certificados</span>
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Reclamaciones</span>
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Reportes</span>
+      <span class="admin-sidebar__item admin-sidebar__item--deshabilitado">Configuración</span>
+    </nav>
+
+    <div class="admin-sidebar__cuenta" #cuentaMenu>
+      <button type="button" class="admin-sidebar__cuenta-boton" (click)="toggleMenuCuenta()">
+        <span class="avatar avatar--sm avatar--cuenta">{{ iniciales }}</span>
+        <span class="admin-sidebar__cuenta-info">
+          <span class="admin-sidebar__cuenta-nombre">{{ usuario()?.nombreCompleto }}</span>
+          <span class="admin-sidebar__cuenta-correo">{{ usuario()?.correo }}</span>
+        </span>
+      </button>
+      @if (menuCuentaAbierto()) {
+        <div class="admin-sidebar__menu">
+          <button type="button" (click)="cerrarSesion()" class="admin-sidebar__menu-item">
+            Cerrar sesión
+          </button>
+        </div>
+      }
+    </div>
+  </aside>
+
+  <main class="admin-contenido">
+    <router-outlet />
+  </main>
+</div>

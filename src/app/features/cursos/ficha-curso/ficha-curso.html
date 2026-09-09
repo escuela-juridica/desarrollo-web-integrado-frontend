@@ -297,7 +297,7 @@
             }
 
             @if (curso.estadoComercial.matriculaPermitida) {
-              <button type="button" class="btn btn--primario btn--grande btn--ancho-completo" routerLink="/registro">
+              <button type="button" class="btn btn--primario btn--grande btn--ancho-completo" (click)="alAccionComercial()">
                 {{ etiquetaAccionComercial() }}
               </button>
             } @else {

@@ -7,11 +7,12 @@ import { Observable, Subject, of, throwError } from 'rxjs';
 import { RegistroApiService } from './registro-api.service';
 import {
   ContextoRegistroGoogle,
+  GoogleRegistroSesion,
   RegistroFormularioPeticion,
   RegistroFormularioRespuesta,
   RegistroGooglePeticion,
 } from './registro.models';
-import { Session, UsuarioSesion } from '../../../core/session/session';
+import { Session } from '../../../core/session/session';
 import { Registro } from './registro';
 
 interface RegistroApiMock {
@@ -22,7 +23,7 @@ interface RegistroApiMock {
     typeof vi.fn<(referencia: string) => Observable<ContextoRegistroGoogle>>
   >;
   completarRegistroGoogle: ReturnType<
-    typeof vi.fn<(peticion: RegistroGooglePeticion) => Observable<UsuarioSesion>>
+    typeof vi.fn<(peticion: RegistroGooglePeticion) => Observable<GoogleRegistroSesion>>
   >;
 }
 
@@ -325,7 +326,7 @@ describe('Registro', () => {
     });
     expect(router.navigate).toHaveBeenCalledWith(['/app/panel']);
     expect(TestBed.inject(Session).estaAutenticado()).toBe(true);
-    expect(TestBed.inject(Session).usuario()?.email).toBe('google@example.com');
+    expect(TestBed.inject(Session).usuario()?.correo).toBe('google@example.com');
   });
 
   function completarFormularioValido(): void {
