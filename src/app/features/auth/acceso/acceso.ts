@@ -67,11 +67,8 @@ export class Acceso {
   }
 
   private navegarSegunRol(rol: 'ALUMNO' | 'ADMINISTRADOR'): void {
-    if (rol === 'ADMINISTRADOR') {
-      this.mensajeError = 'El panel de administrador todavía no está disponible.';
-      return;
-    }
-    void this.router.navigate(['/app/panel']);
+    // HU-008: por ahora el panel de administrador solo tiene "Usuarios" implementado.
+    void this.router.navigate([rol === 'ADMINISTRADOR' ? '/admin/usuarios' : '/app/panel']);
   }
 
   private manejarError(error: HttpErrorResponse, correo: string): void {

@@ -486,6 +486,12 @@
   color: var(--neutral-600);
 }
 
+// Estados administrativos genéricos (HU-008: estado de cuenta y similares).
+.badge--advertencia-suave {
+  background: var(--advertencia-fondo);
+  color: var(--advertencia);
+}
+
 .badge--destacado {
   background: var(--rojo-marca-600);
   color: var(--blanco);

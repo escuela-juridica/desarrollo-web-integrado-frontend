@@ -1,0 +1,159 @@
+// Sidebar del área administrativa (HU-008, según el Figma EP02-PF-010).
+
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--neutral-050);
+}
+
+.admin-sidebar {
+  flex: 0 0 240px;
+  width: 240px;
+  background: #ffffff;
+  border-right: 1px solid var(--neutral-200);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+}
+
+.admin-sidebar__logo {
+  height: 44px;
+  width: auto;
+  align-self: flex-start;
+  margin: 0 0 32px 8px;
+}
+
+.admin-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-sidebar__item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: var(--radio-md);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--marca-700);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.admin-sidebar__item:hover {
+  background: var(--neutral-050);
+  text-decoration: none;
+}
+
+.admin-sidebar__item--activo {
+  background: var(--acento-100);
+  color: var(--acento-700);
+  font-weight: 700;
+}
+
+.admin-sidebar__item--deshabilitado {
+  cursor: default;
+}
+
+.admin-sidebar__item--deshabilitado:hover {
+  background: none;
+}
+
+.admin-sidebar__cuenta {
+  margin-top: auto;
+  position: relative;
+  padding-top: 16px;
+  border-top: 1px solid var(--neutral-200);
+}
+
+.admin-sidebar__cuenta-boton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--radio-md);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.admin-sidebar__cuenta-boton:hover {
+  background: var(--neutral-050);
+}
+
+.admin-sidebar__cuenta-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.admin-sidebar__cuenta-nombre {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--neutral-950);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-sidebar__cuenta-correo {
+  font-size: 12px;
+  color: var(--neutral-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-sidebar__menu {
+  position: absolute;
+  bottom: 100%;
+  left: 8px;
+  right: 8px;
+  margin-bottom: 8px;
+  background: #ffffff;
+  border: 1px solid var(--neutral-200);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.14);
+  overflow: hidden;
+}
+
+.admin-sidebar__menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--neutral-600);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-sidebar__menu-item:hover {
+  background: var(--neutral-050);
+}
+
+.admin-contenido {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+}
+
+@media (max-width: 767px) {
+  .admin-shell {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    flex: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--neutral-200);
+  }
+
+  .admin-contenido {
+    padding: 20px 16px;
+  }
+}

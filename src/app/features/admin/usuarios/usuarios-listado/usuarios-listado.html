@@ -1,0 +1,62 @@
+<!-- NO ES LA VERSIÓN FINAL: ver el comentario de UsuariosAdminMockService. -->
+<div class="usuarios-admin-cabecera">
+  <div>
+    <h1 class="usuarios-admin-titulo">Usuarios</h1>
+    <p class="usuarios-admin-subtitulo">La habilitación exige correo verificado y contraseña propia.</p>
+  </div>
+  <button type="button" class="btn btn--primario" routerLink="/admin/usuarios/nuevo">
+    Crear usuario
+  </button>
+</div>
+
+<div class="usuarios-admin-filtros">
+  <input
+    class="input"
+    [ngModel]="busqueda()"
+    (ngModelChange)="onBusquedaInput($event)"
+    placeholder="Buscar por nombre o correo"
+  />
+  <select class="input" [ngModel]="filtroRol()" (ngModelChange)="onFiltroRolChange($event)">
+    <option value="TODOS">Todos los roles</option>
+    <option value="ALUMNO">Alumno</option>
+    <option value="ADMINISTRADOR">Administrador</option>
+  </select>
+</div>
+
+@if (usuarios().length === 0) {
+  <div class="estado-vacio">
+    <h3 class="estado-vacio__titulo">Sin resultados</h3>
+    <p class="estado-vacio__texto">Ningún usuario coincide con esa búsqueda.</p>
+  </div>
+} @else {
+  <div class="usuarios-admin-tabla">
+    <div class="usuarios-admin-fila usuarios-admin-fila--cabecera">
+      <span>Nombre</span>
+      <span>Correo</span>
+      <span>Rol</span>
+      <span>Origen</span>
+      <span>Estado de cuenta</span>
+      <span>Perfil concedido por</span>
+    </div>
+    @for (usuario of usuarios(); track usuario.usuarioId) {
+      <a class="usuarios-admin-fila" [routerLink]="['/admin/usuarios', usuario.usuarioId]">
+        <span class="usuarios-admin-fila__nombre">{{ usuario.nombreCompleto }}</span>
+        <span class="usuarios-admin-fila__correo">{{ usuario.correo }}</span>
+        <span>{{ usuario.rolPrincipal === 'ADMINISTRADOR' ? 'Administrador' : 'Alumno' }}</span>
+        <span>
+          @switch (usuario.origenRegistro) {
+            @case ('FORMULARIO') { Formulario }
+            @case ('GOOGLE') { Google }
+            @case ('ADMINISTRATIVO') { Administración }
+          }
+        </span>
+        <span>
+          <span class="badge" [class]="servicio.claseEstadoCuenta(usuario)">
+            {{ servicio.etiquetaEstadoCuenta(usuario) }}
+          </span>
+        </span>
+        <span>{{ servicio.etiquetaOtorgadoPor(usuario) }}</span>
+      </a>
+    }
+  </div>
+}

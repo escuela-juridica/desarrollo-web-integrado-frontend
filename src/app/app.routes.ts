@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { adminGuard } from './core/session/admin-guard';
 import { sessionGuard } from './core/session/session-guard';
 
 export const routes: Routes = [
@@ -85,6 +86,38 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/cuenta/mi-perfil/mi-perfil').then((m) => m.MiPerfil),
       }, // PF-009
+    ],
+  },
+  // HU-008: NO ES LA VERSIÓN FINAL — solo "usuarios" existe hasta ahora, contra datos en
+  // memoria (ver UsuariosAdminMockService). El resto del panel administrativo queda pendiente.
+  {
+    path: 'admin',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./core/layout/layout-admin/layout-admin').then((m) => m.LayoutAdmin),
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
+      {
+        path: 'usuarios',
+        loadComponent: () =>
+          import('./features/admin/usuarios/usuarios-listado/usuarios-listado').then(
+            (m) => m.UsuariosListado,
+          ),
+      },
+      {
+        path: 'usuarios/nuevo',
+        loadComponent: () =>
+          import('./features/admin/usuarios/usuario-crear/usuario-crear').then(
+            (m) => m.UsuarioCrear,
+          ),
+      },
+      {
+        path: 'usuarios/:id',
+        loadComponent: () =>
+          import('./features/admin/usuarios/usuario-detalle/usuario-detalle').then(
+            (m) => m.UsuarioDetalle,
+          ),
+      },
     ],
   },
 ];
