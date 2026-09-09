@@ -1,27 +1,103 @@
 <main>
   <div class="contenedor-centrado verif-max">
-    <div class="card verif-tarjeta">
-      <div class="icono-estado icono-estado--info">✉</div>
-      <h1>Revisa tu correo</h1>
-      <p>Te enviamos un código de 6 dígitos a <strong>luc***@esejur.pe</strong>. Ingrésalo para activar tu cuenta.</p>
-      <div class="alerta alerta--error verif-alerta">
-        <span class="alerta__icono">!</span>
-        <span class="alerta__texto">El código no coincide. Verifica e intenta de nuevo.</span>
-      </div>
-      <div class="verif-input-wrap">
-        <input class="input input--error verif-input" placeholder="000000" maxlength="6" />
-      </div>
-      <button type="button" class="btn btn--grande btn--primario verif-boton">Verificar</button>
-      <div class="verif-reenviar">¿No te llegó? <a href="#">Reenviar código</a></div>
-    </div>
+    @switch (estado()) {
+      @case ('verificado') {
+        <div class="card verif-tarjeta">
+          <div class="icono-estado icono-estado--exito">✓</div>
+          <h1>Correo verificado</h1>
+          @if (requiereCambioContrasena()) {
+            <p style="margin-bottom: 28px">
+              Tu correo ya está verificado. Como tu cuenta fue creada por un administrador, al
+              iniciar sesión deberás definir tu propia contraseña.
+            </p>
+          } @else {
+            <p style="margin-bottom: 28px">
+              Tu cuenta ya está habilitada. Puedes iniciar sesión y matricularte sin intervención
+              administrativa.
+            </p>
+          }
+          <button type="button" class="btn btn--grande btn--primario verif-boton" (click)="irAAcceso()">
+            Iniciar sesión
+          </button>
+        </div>
+      }
+      @default {
+        <div class="card verif-tarjeta">
+          <div class="icono-estado icono-estado--info">✉</div>
+          <h1>Revisa tu correo</h1>
 
-    <!-- Estado alterno: verifOk -->
-    <p class="pantalla-pendiente__codigo" style="margin: 40px 0 16px">Estado alterno · Correo verificado</p>
-    <div class="card verif-tarjeta">
-      <div class="icono-estado icono-estado--exito">✓</div>
-      <h1>Correo verificado</h1>
-      <p style="margin-bottom: 28px">Tu cuenta ya está habilitada. Puedes iniciar sesión y matricularte sin intervención administrativa.</p>
-      <button type="button" class="btn btn--grande btn--primario verif-boton" onclick="location.href='HU-001-PF-003-acceso.html'">Iniciar sesión</button>
-    </div>
+          @if (correoConocido()) {
+            <p>
+              Te enviamos un código de 6 dígitos a <strong>{{ correoOculto() }}</strong>. Ingrésalo
+              para activar tu cuenta.
+            </p>
+          } @else if (resolviendoContexto()) {
+            <p>Recuperando los datos de tu registro…</p>
+          } @else {
+            <p>
+              Escribe el correo con el que te registraste para poder verificar tu código de 6
+              dígitos.
+            </p>
+            <div class="verif-input-wrap">
+              <input
+                class="input"
+                type="email"
+                placeholder="nombre@correo.com"
+                [value]="correoManual()"
+                (input)="onCorreoManualInput($any($event.target).value)"
+              />
+            </div>
+          }
+
+          @if (errorCodigo(); as mensaje) {
+            <div class="alerta alerta--error verif-alerta">
+              <span class="alerta__icono">!</span>
+              <span class="alerta__texto">{{ mensaje }}</span>
+            </div>
+          }
+          @if (errorGeneral(); as mensaje) {
+            <div class="alerta alerta--error verif-alerta">
+              <span class="alerta__icono">!</span>
+              <span class="alerta__texto">{{ mensaje }}</span>
+            </div>
+          }
+          @if (mensajeReenvio(); as mensaje) {
+            <div class="alerta alerta--info verif-alerta">
+              <span class="alerta__icono">i</span>
+              <span class="alerta__texto">{{ mensaje }}</span>
+            </div>
+          }
+
+          <div class="verif-input-wrap">
+            <input
+              class="input verif-input"
+              [class.input--error]="errorCodigo()"
+              placeholder="000000"
+              maxlength="6"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              [value]="codigo()"
+              (input)="onCodigoInput($any($event.target).value)"
+            />
+          </div>
+
+          <button
+            type="button"
+            class="btn btn--grande btn--primario verif-boton"
+            [disabled]="!puedeVerificar()"
+            (click)="verificar()"
+          >
+            {{ estado() === 'verificando' ? 'Verificando...' : 'Verificar' }}
+          </button>
+
+          <div class="verif-reenviar">
+            ¿No te llegó?
+            <button type="button" class="verif-reenviar__boton" (click)="reenviar()">
+              {{ reenviando() ? 'Enviando...' : 'Reenviar código' }}
+            </button>
+          </div>
+        </div>
+      }
+    }
   </div>
 </main>
