@@ -1,6 +1,4 @@
 // PF-005 · Estilos propios de esta pantalla.
-// PENDIENTE — pegar acá las clases .verif-* del bloque <style> de
-// maquetacion-html/HU-003-PF-005-verificar-correo.html
 .verif-max {
   max-width: 420px;
   margin: 0 auto;
@@ -59,8 +57,18 @@
   text-align: center;
 }
 
-.verif-reenviar a {
+.verif-reenviar a,
+.verif-reenviar__boton {
   color: var(--marca-700);
+}
+
+.verif-reenviar__boton {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 @media (max-width: 480px) {
