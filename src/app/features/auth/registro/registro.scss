@@ -217,15 +217,6 @@ app-boton-google-pendiente {
   color: var(--acento-700);
 }
 
-.requisito-pass--cumplido {
-  color: var(--exito);
-}
-
-.requisito-pass--cumplido .requisito-pass__marca {
-  background: var(--exito-fondo);
-  color: var(--exito);
-}
-
 @media (max-width: 767px) {
   .registro-hero-col {
     flex-basis: 100%;

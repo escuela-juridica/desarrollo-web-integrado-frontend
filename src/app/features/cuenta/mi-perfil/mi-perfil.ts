@@ -318,7 +318,10 @@ export class MiPerfil implements OnInit {
         next: () => {
           this.contrasenaCreada.set(true);
           this.intentoContrasena.set(false);
-          this.formularioContrasena.reset({ contrasena: '', confirmarContrasena: '' });
+          this.formularioContrasena.reset(
+            { contrasena: '', confirmarContrasena: '' },
+            { emitEvent: false },
+          );
           const perfilActual = this.perfil();
           if (perfilActual) {
             this.perfil.set({ ...perfilActual, puedeCrearContrasena: false });
@@ -365,11 +368,14 @@ export class MiPerfil implements OnInit {
         next: () => {
           this.contrasenaCambiada.set(true);
           this.intentoCambioContrasena.set(false);
-          this.formularioCambioContrasena.reset({
-            contrasenaActual: '',
-            contrasena: '',
-            confirmarContrasena: '',
-          });
+          this.formularioCambioContrasena.reset(
+            {
+              contrasenaActual: '',
+              contrasena: '',
+              confirmarContrasena: '',
+            },
+            { emitEvent: false },
+          );
         },
         error: (error: HttpErrorResponse) => {
           this.manejarErrorCambioContrasena(error);

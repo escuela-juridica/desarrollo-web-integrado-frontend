@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, signal, viewChild } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { FooterPublico } from '../footer-publico/footer-publico';
 import { obtenerIniciales } from '../../session/nombre-utils';
@@ -12,19 +12,22 @@ import { Session } from '../../session/session';
 })
 export class LayoutPublico {
   private readonly session = inject(Session);
-  private readonly elementRef = inject(ElementRef);
 
   protected readonly usuario = this.session.usuario;
   protected readonly estaAutenticado = this.session.estaAutenticado;
   protected readonly menuCuentaAbierto = signal(false);
 
+  private readonly cuentaMenuRef = viewChild<ElementRef<HTMLElement>>('cuentaMenu');
+
   protected get iniciales(): string {
     return obtenerIniciales(this.usuario()?.nombreCompleto);
   }
 
+  /** Antes comparaba contra el host de todo el layout (header + contenido), así que casi
+   * cualquier clic en la página contaba como "adentro" y el menú nunca se cerraba solo. */
   @HostListener('document:click', ['$event'])
   protected alClicFuera(evento: MouseEvent): void {
-    if (this.elementRef.nativeElement.contains(evento.target)) return;
+    if (this.cuentaMenuRef()?.nativeElement.contains(evento.target as Node)) return;
     this.menuCuentaAbierto.set(false);
   }
 

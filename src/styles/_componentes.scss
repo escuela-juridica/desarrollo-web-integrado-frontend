@@ -668,6 +668,15 @@
   color: var(--neutral-500);
 }
 
+.requisito-pass--cumplido {
+  color: var(--exito);
+}
+
+.requisito-pass--cumplido .requisito-pass__marca {
+  background: var(--exito-fondo);
+  color: var(--exito);
+}
+
 // -------------------------------------------------------------- Hero media --
 // Fondo con imagen + degradado, usado en heros y paneles laterales de auth.
 .hero-media {

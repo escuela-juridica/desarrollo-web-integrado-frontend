@@ -17,6 +17,7 @@
     </nav>
     <div class="header-derecha">
       <button
+        #movilBoton
         type="button"
         class="header-hamburguesa"
         aria-label="Abrir menú"
@@ -38,7 +39,7 @@
           <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
       </button>
-      <div class="header-cuenta">
+      <div class="header-cuenta" #cuentaMenu>
         <button
           type="button"
           class="avatar avatar--md avatar--cuenta"
@@ -80,7 +81,7 @@
   </div>
 
   @if (menuMovilAbierto()) {
-    <nav class="menu-movil">
+    <nav class="menu-movil" #movilPanel>
       <a
         routerLink="/app/panel"
         routerLinkActive="menu-movil__item--activo"
