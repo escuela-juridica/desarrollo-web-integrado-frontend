@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgClass } from '@angular/common';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subject, catchError, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { CursoApiService } from '../curso-api.service';
 import {
@@ -16,6 +16,7 @@ import {
   formatearPrecio,
 } from '../curso-formato.util';
 import { FichaCursoDetalle, LeccionFicha, VistaPrevia } from '../curso.model';
+import { Session } from '../../../core/session/session';
 
 const LARGO_MAXIMO_DESCRIPCION = 260;
 
@@ -32,6 +33,8 @@ export class FichaCurso implements OnInit {
   private readonly ruta = inject(ActivatedRoute);
   private readonly cursoApi = inject(CursoApiService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly session = inject(Session);
+  private readonly router = inject(Router);
 
   protected readonly ficha = signal<FichaCursoDetalle | null>(null);
   protected readonly estado = signal<EstadoPantalla>('cargando');
@@ -204,6 +207,16 @@ export class FichaCurso implements OnInit {
       default:
         return '';
     }
+  }
+
+  protected alAccionComercial(): void {
+    if (this.session.estaAutenticado()) {
+      alert('La matrícula y el pago en línea estarán disponibles próximamente.');
+      return;
+    }
+    void this.router.navigate(['/acceso'], {
+      state: { mensajeInfo: 'Para continuar debes iniciar sesión.' },
+    });
   }
 
   private cargarFicha(urlAmigable: string): void {

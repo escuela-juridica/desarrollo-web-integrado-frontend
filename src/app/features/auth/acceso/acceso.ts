@@ -29,6 +29,12 @@ export class Acceso {
   mostrarPassword = false;
   cargando = false;
   mensajeError = '';
+  mensajeInfo = this.leerMensajeInfo();
+
+  private leerMensajeInfo(): string {
+    const estadoNavegacion = history.state as { mensajeInfo?: unknown } | null;
+    return typeof estadoNavegacion?.mensajeInfo === 'string' ? estadoNavegacion.mensajeInfo : '';
+  }
 
   onLogin(): void {
     if (this.cargando || !this.credenciales.correo.trim() || !this.credenciales.contrasena) {

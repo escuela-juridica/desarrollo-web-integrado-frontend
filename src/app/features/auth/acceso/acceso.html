@@ -17,6 +17,13 @@
       <p class="acceso-subtitulo">Ingresa para continuar tus cursos y ver tus certificados.</p>
 
       <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="acceso-formulario">
+        @if (mensajeInfo) {
+          <div class="alerta alerta--info">
+            <span class="alerta__icono">i</span>
+            <div class="alerta__texto">{{ mensajeInfo }}</div>
+          </div>
+        }
+
         <app-boton-google-pendiente mensaje="El acceso con Google todavía no está disponible." />
 
         <!-- Mensaje de Error Dinámico -->
