@@ -1,3 +1,106 @@
 // PF-008 · Estilos propios de esta pantalla.
 // PENDIENTE — pegar acá las clases .panel-* del bloque <style> de
 // maquetacion-html/HU-001-PF-008-panel.html
+
+.panel-titulo {
+    color: var(--neutral-950);
+    margin: 0 0 8px;
+}
+
+.panel-subtitulo {
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--neutral-600);
+    margin: 0 0 32px;
+}
+
+.panel-seccion-titulo {
+    color: var(--neutral-950);
+    margin: 0 0 16px;
+}
+
+.panel-curso {
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.panel-curso__acento {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--marca-900) 0%, var(--acento-700) 100%);
+}
+
+.panel-curso__imagen {
+    flex: 0 0 200px;
+    align-self: stretch;
+    aspect-ratio: 16 / 9;
+    background-image: url('/img/catalogo/curso-1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.panel-curso__info {
+    flex: 1 1 260px;
+    padding: 12px 0;
+}
+
+.panel-curso__categoria {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--marca-700);
+    margin-bottom: 4px;
+}
+
+.panel-curso__nombre {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+    color: var(--neutral-950);
+    margin: 0 0 12px;
+}
+
+.panel-curso__progreso {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 440px;
+}
+
+.panel-curso__progreso-pista {
+    flex: 1;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--neutral-200);
+    overflow: hidden;
+}
+
+.panel-curso__progreso-relleno {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--acento-500);
+}
+
+.panel-curso__progreso-porcentaje {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    color: var(--marca-900);
+}
+
+.panel-curso__leccion {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--neutral-500);
+    margin-top: 8px;
+}
+
+.panel-curso__boton {
+    margin-right: 24px;
+}
