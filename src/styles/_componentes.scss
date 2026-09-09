@@ -621,6 +621,11 @@
   color: var(--exito);
 }
 
+.icono-estado--error {
+  background: var(--error-fondo);
+  color: var(--error);
+}
+
 // ------------------------------------------------- Requisitos de contraseña --
 // Checklist "○ Al menos 8 caracteres" que se repite igual en nueva-password,
 // registro y mi-perfil (pestaña Seguridad).
