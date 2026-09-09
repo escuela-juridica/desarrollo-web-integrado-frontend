@@ -1,4 +1,4 @@
-<!-- NO ES LA VERSIÓN FINAL: ver el comentario de UsuariosAdminMockService. -->
+<!-- NO ES LA VERSIÓN FINAL: ver el comentario de AdminUsuariosApiService. -->
 <div class="usuarios-admin-cabecera">
   <div>
     <h1 class="usuarios-admin-titulo">Usuarios</h1>
@@ -23,7 +23,14 @@
   </select>
 </div>
 
-@if (usuarios().length === 0) {
+@if (cargando()) {
+  <p>Cargando…</p>
+} @else if (error()) {
+  <div class="alerta alerta--error">
+    <span class="alerta__icono">!</span>
+    <div class="alerta__titulo">{{ error() }}</div>
+  </div>
+} @else if (usuarios().length === 0) {
   <div class="estado-vacio">
     <h3 class="estado-vacio__titulo">Sin resultados</h3>
     <p class="estado-vacio__texto">Ningún usuario coincide con esa búsqueda.</p>
@@ -51,11 +58,11 @@
           }
         </span>
         <span>
-          <span class="badge" [class]="servicio.claseEstadoCuenta(usuario)">
-            {{ servicio.etiquetaEstadoCuenta(usuario) }}
+          <span class="badge" [class]="claseEstadoCuenta(usuario)">
+            {{ etiquetaEstadoCuenta(usuario) }}
           </span>
         </span>
-        <span>{{ servicio.etiquetaOtorgadoPor(usuario) }}</span>
+        <span>{{ etiquetaOtorgadoPor(usuario) }}</span>
       </a>
     }
   </div>

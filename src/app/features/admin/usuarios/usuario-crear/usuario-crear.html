@@ -1,4 +1,5 @@
-<!-- NO ES LA VERSIÓN FINAL: sin referencia de diseño (el Figma de HU-008 solo cubre el listado). -->
+<!-- NO ES LA VERSIÓN FINAL: sin referencia de diseño (el Figma de HU-008 solo cubre el listado).
+     Ver el comentario de AdminUsuariosApiService: API real pero sin base de datos. -->
 <div class="contenedor-centrado" style="max-width: 640px; padding: 0">
     <a routerLink="/admin/usuarios" class="usuario-crear-volver">&larr; Volver a usuarios</a>
     <div class="eyebrow"><span class="eyebrow__dash"></span><span class="eyebrow__texto">Administración</span></div>
@@ -41,6 +42,12 @@
       </div>
     } @else {
       <form class="card card--acento-superior usuario-crear-formulario" [formGroup]="formulario" (ngSubmit)="crear()">
+        @if (errorCrear()) {
+          <div class="alerta alerta--error">
+            <span class="alerta__icono">!</span>
+            <div class="alerta__titulo">{{ errorCrear() }}</div>
+          </div>
+        }
         <div class="usuario-crear-campos">
           <div>
             <label class="label" for="nombres">Nombres</label>
@@ -107,7 +114,7 @@
         </div>
 
         <div class="usuario-crear-acciones">
-          <button type="submit" class="btn btn--primario">Crear usuario</button>
+          <button type="submit" class="btn btn--primario" [disabled]="guardando()">Crear usuario</button>
         </div>
       </form>
     }

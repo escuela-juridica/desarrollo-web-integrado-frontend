@@ -1,13 +1,20 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectorRef, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 
+import { AdminUsuariosApiService } from '../admin-usuarios-api.service';
 import { CrearUsuarioAdminRespuesta, RolUsuarioAdmin } from '../usuario-admin.model';
-import { UsuariosAdminMockService } from '../usuarios-admin-mock.service';
 
-/** ⚠️ NO ES LA VERSIÓN FINAL: guarda contra UsuariosAdminMockService (en memoria), no contra un
- * backend real; no envía ningún correo de verdad. Ver el comentario de ese servicio. */
+interface ErrorApiAdmin {
+  code?: string;
+  message?: string;
+}
+
+/** ⚠️ NO ES LA VERSIÓN FINAL: guarda contra `/api/admin/usuarios`, una API REST real pero sin
+ * base de datos; no envía ningún correo de verdad. Ver el comentario de AdminUsuariosApiService. */
 @Component({
   selector: 'app-usuario-crear',
   imports: [ReactiveFormsModule, RouterLink],
@@ -15,12 +22,15 @@ import { UsuariosAdminMockService } from '../usuarios-admin-mock.service';
   styleUrl: './usuario-crear.scss',
 })
 export class UsuarioCrear {
-  private readonly servicio = inject(UsuariosAdminMockService);
+  private readonly api = inject(AdminUsuariosApiService);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly detector = inject(ChangeDetectorRef);
 
   protected readonly intentoGuardar = signal(false);
+  protected readonly guardando = signal(false);
+  protected readonly errorCrear = signal<string | null>(null);
   protected readonly resultado = signal<CrearUsuarioAdminRespuesta | null>(null);
 
   protected readonly formulario = this.fb.group({
@@ -53,7 +63,12 @@ export class UsuarioCrear {
   }
 
   protected crear(): void {
+    if (this.guardando()) {
+      return;
+    }
+
     this.intentoGuardar.set(true);
+    this.errorCrear.set(null);
     this.resultado.set(null);
 
     if (this.formulario.invalid) {
@@ -62,17 +77,33 @@ export class UsuarioCrear {
     }
 
     const valores = this.formulario.getRawValue();
-    const respuesta = this.servicio.crear({
-      nombres: valores.nombres.trim(),
-      apellidoPaterno: valores.apellidoPaterno.trim(),
-      apellidoMaterno: this.textoOpcional(valores.apellidoMaterno),
-      correo: valores.correo.trim(),
-      telefono: this.textoOpcional(valores.telefono),
-      documentoIdentidad: this.textoOpcional(valores.documentoIdentidad),
-      rol: valores.rol,
-    });
-
-    this.resultado.set(respuesta);
+    this.guardando.set(true);
+    this.api
+      .crear({
+        nombres: valores.nombres.trim(),
+        apellidoPaterno: valores.apellidoPaterno.trim(),
+        apellidoMaterno: this.textoOpcional(valores.apellidoMaterno),
+        correo: valores.correo.trim(),
+        telefono: this.textoOpcional(valores.telefono),
+        documentoIdentidad: this.textoOpcional(valores.documentoIdentidad),
+        rol: valores.rol,
+      })
+      .pipe(
+        finalize(() => {
+          this.guardando.set(false);
+          this.detector.markForCheck();
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (respuesta) => this.resultado.set(respuesta),
+        error: (error: HttpErrorResponse) => {
+          const respuesta = typeof error.error === 'object' && error.error !== null
+            ? (error.error as ErrorApiAdmin)
+            : null;
+          this.errorCrear.set(respuesta?.message ?? 'No pudimos crear el usuario. Inténtalo nuevamente.');
+        },
+      });
   }
 
   protected verDetalle(): void {

@@ -1,4 +1,5 @@
-<!-- NO ES LA VERSIÓN FINAL: sin referencia de diseño (el Figma de HU-008 solo cubre el listado). -->
+<!-- NO ES LA VERSIÓN FINAL: sin referencia de diseño (el Figma de HU-008 solo cubre el listado).
+     Ver el comentario de AdminUsuariosApiService: API real pero sin base de datos. -->
 <div class="contenedor-centrado" style="max-width: 640px; padding: 0">
     <a routerLink="/admin/usuarios" class="usuario-detalle-volver">&larr; Volver a usuarios</a>
 
@@ -92,7 +93,7 @@
             <div>
               <div class="usuario-detalle-etiqueta">Perfil concedido por</div>
               <div class="usuario-detalle-valor">
-                {{ servicio.etiquetaOtorgadoPor(u) }}
+                {{ etiquetaOtorgadoPor(u) }}
                 @if (u.concedidoPorNombre) {
                   ({{ u.concedidoPorNombre }})
                 }
@@ -102,17 +103,28 @@
 
           <div class="usuario-detalle-acciones">
             @if (u.activo) {
-              <button type="button" class="btn btn--secundario" (click)="cambiarEstado(false)">
+              <button
+                type="button"
+                class="btn btn--secundario"
+                [disabled]="cambiandoEstado()"
+                (click)="cambiarEstado(false)"
+              >
                 Deshabilitar cuenta
               </button>
             } @else {
-              <button type="button" class="btn btn--primario" (click)="cambiarEstado(true)">
+              <button
+                type="button"
+                class="btn btn--primario"
+                [disabled]="cambiandoEstado()"
+                (click)="cambiarEstado(true)"
+              >
                 Habilitar cuenta
               </button>
             }
             <button
               type="button"
               class="btn btn--secundario usuario-detalle-eliminar"
+              [disabled]="eliminando()"
               (click)="eliminar()"
             >
               Eliminar permanentemente
@@ -165,7 +177,9 @@
             </div>
 
             <div class="usuario-detalle-acciones">
-              <button type="submit" class="btn btn--primario">Guardar cambios</button>
+              <button type="submit" class="btn btn--primario" [disabled]="guardandoEdicion()">
+                Guardar cambios
+              </button>
               <button type="button" class="btn btn--secundario" (click)="cancelarEdicion()">Cancelar</button>
             </div>
           </form>

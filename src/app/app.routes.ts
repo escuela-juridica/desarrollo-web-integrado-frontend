@@ -88,8 +88,9 @@ export const routes: Routes = [
       }, // PF-009
     ],
   },
-  // HU-008: NO ES LA VERSIÓN FINAL — solo "usuarios" existe hasta ahora, contra datos en
-  // memoria (ver UsuariosAdminMockService). El resto del panel administrativo queda pendiente.
+  // HU-008: NO ES LA VERSIÓN FINAL — solo "usuarios" existe hasta ahora, contra
+  // /api/admin/usuarios (API REST real pero sin base de datos, ver AdminUsuariosApiService).
+  // El resto del panel administrativo queda pendiente.
   {
     path: 'admin',
     canActivate: [adminGuard],
