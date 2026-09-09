@@ -22,3 +22,9 @@ export interface NuevaContrasenaPeticion {
   contrasena: string;
   confirmacion: string;
 }
+
+export interface CambiarContrasenaPeticion {
+  contrasenaActual: string;
+  contrasenaNueva: string;
+  confirmacion: string;
+}

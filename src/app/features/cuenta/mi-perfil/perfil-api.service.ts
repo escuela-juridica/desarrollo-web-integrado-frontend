@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { API_URL } from '../../../core/api/api.config';
 import {
   ActualizarPerfilPeticion,
+  CambiarContrasenaPeticion,
   NuevaContrasenaPeticion,
   PerfilRespuesta,
 } from './perfil.models';
@@ -24,5 +25,9 @@ export class PerfilApiService {
 
   crearContrasena(peticion: NuevaContrasenaPeticion): Observable<void> {
     return this.http.put<void>(`${this.urlPerfil}/contrasena`, peticion);
+  }
+
+  cambiarContrasena(peticion: CambiarContrasenaPeticion): Observable<void> {
+    return this.http.put<void>(`${this.urlPerfil}/contrasena/cambio`, peticion);
   }
 }

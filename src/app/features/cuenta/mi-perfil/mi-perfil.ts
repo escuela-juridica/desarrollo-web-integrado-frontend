@@ -55,6 +55,14 @@ export class MiPerfil implements OnInit {
   protected mostrarContrasena = false;
   protected mostrarConfirmacion = false;
 
+  protected readonly cambiandoContrasena = signal(false);
+  protected readonly contrasenaCambiada = signal(false);
+  protected readonly errorCambioContrasena = signal<string | null>(null);
+  protected readonly intentoCambioContrasena = signal(false);
+  protected mostrarContrasenaActual = false;
+  protected mostrarContrasenaNueva = false;
+  protected mostrarConfirmacionNueva = false;
+
   protected readonly formulario = this.fb.group({
     nombres: ['', [Validators.required, Validators.maxLength(120), nombrePropioValidator]],
     apellidoPaterno: ['', [Validators.required, Validators.maxLength(80), nombrePropioValidator]],
@@ -65,6 +73,15 @@ export class MiPerfil implements OnInit {
 
   protected readonly formularioContrasena = this.fb.group(
     {
+      contrasena: ['', [Validators.required, politicaContrasenaValidator]],
+      confirmarContrasena: ['', [Validators.required]],
+    },
+    { validators: contrasenasCoincidenValidator },
+  );
+
+  protected readonly formularioCambioContrasena = this.fb.group(
+    {
+      contrasenaActual: ['', [Validators.required]],
       contrasena: ['', [Validators.required, politicaContrasenaValidator]],
       confirmarContrasena: ['', [Validators.required]],
     },
@@ -115,14 +132,25 @@ export class MiPerfil implements OnInit {
           this.detector.markForCheck();
         });
     }
+
+    for (const nombre of ['contrasenaActual', 'contrasena', 'confirmarContrasena'] as const) {
+      this.formularioCambioContrasena.controls[nombre].valueChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.contrasenaCambiada.set(false);
+          this.detector.markForCheck();
+        });
+    }
   }
 
   protected cambiarPestana(pestana: Pestana): void {
     this.pestana.set(pestana);
   }
 
+  /** Toda cuenta tiene alguna acción en Seguridad: crear su primera contraseña (Google sin
+   * contraseña) o cambiar la que ya tiene. */
   protected get mostrarPestanaSeguridad(): boolean {
-    return this.contrasenaCreada() || !!this.perfil()?.puedeCrearContrasena;
+    return this.perfil() !== null;
   }
 
   protected get inicialesUsuario(): string {
@@ -163,10 +191,52 @@ export class MiPerfil implements OnInit {
     return /\p{Nd}/u.test(this.valorContrasena);
   }
 
+  protected get contrasenaCrearInvalida(): boolean {
+    const control = this.formularioContrasena.controls.contrasena;
+    return control.invalid && (control.touched || this.intentoContrasena());
+  }
+
   protected get confirmacionContrasenaInvalida(): boolean {
     const confirmacion = this.formularioContrasena.controls.confirmarContrasena;
     const debeMostrarError = confirmacion.touched || this.intentoContrasena();
     const noCoincide = this.formularioContrasena.hasError('contrasenasDiferentes');
+    return debeMostrarError && (confirmacion.invalid || noCoincide);
+  }
+
+  protected get valorContrasenaNueva(): string {
+    return this.formularioCambioContrasena.controls.contrasena.value;
+  }
+
+  protected get cumpleLongitudNueva(): boolean {
+    return this.valorContrasenaNueva.length >= 8;
+  }
+
+  protected get cumpleMayusculaNueva(): boolean {
+    return /\p{Uppercase}/u.test(this.valorContrasenaNueva);
+  }
+
+  protected get cumpleMinusculaNueva(): boolean {
+    return /\p{Lowercase}/u.test(this.valorContrasenaNueva);
+  }
+
+  protected get cumpleNumeroNueva(): boolean {
+    return /\p{Nd}/u.test(this.valorContrasenaNueva);
+  }
+
+  protected get contrasenaActualInvalida(): boolean {
+    const control = this.formularioCambioContrasena.controls.contrasenaActual;
+    return control.invalid && (control.touched || this.intentoCambioContrasena());
+  }
+
+  protected get contrasenaNuevaInvalida(): boolean {
+    const control = this.formularioCambioContrasena.controls.contrasena;
+    return control.invalid && (control.touched || this.intentoCambioContrasena());
+  }
+
+  protected get confirmacionContrasenaNuevaInvalida(): boolean {
+    const confirmacion = this.formularioCambioContrasena.controls.confirmarContrasena;
+    const debeMostrarError = confirmacion.touched || this.intentoCambioContrasena();
+    const noCoincide = this.formularioCambioContrasena.hasError('contrasenasDiferentes');
     return debeMostrarError && (confirmacion.invalid || noCoincide);
   }
 
@@ -242,25 +312,68 @@ export class MiPerfil implements OnInit {
           this.guardandoContrasena.set(false);
           this.detector.markForCheck();
         }),
-        catchError((error: HttpErrorResponse) => {
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => {
+          this.contrasenaCreada.set(true);
+          this.intentoContrasena.set(false);
+          this.formularioContrasena.reset({ contrasena: '', confirmarContrasena: '' });
+          const perfilActual = this.perfil();
+          if (perfilActual) {
+            this.perfil.set({ ...perfilActual, puedeCrearContrasena: false });
+          }
+        },
+        error: (error: HttpErrorResponse) => {
           this.errorContrasena.set(
             this.obtenerErrorApi(error)?.message ?? 'No pudimos guardar la contraseña. Inténtalo nuevamente.',
           );
-          return of(null);
+        },
+      });
+  }
+
+  protected cambiarContrasena(): void {
+    if (this.cambiandoContrasena()) {
+      return;
+    }
+
+    this.intentoCambioContrasena.set(true);
+    this.errorCambioContrasena.set(null);
+    this.contrasenaCambiada.set(false);
+
+    if (this.formularioCambioContrasena.invalid) {
+      this.formularioCambioContrasena.markAllAsTouched();
+      return;
+    }
+
+    const valores = this.formularioCambioContrasena.getRawValue();
+    this.cambiandoContrasena.set(true);
+    this.api
+      .cambiarContrasena({
+        contrasenaActual: valores.contrasenaActual,
+        contrasenaNueva: valores.contrasena,
+        confirmacion: valores.confirmarContrasena,
+      })
+      .pipe(
+        finalize(() => {
+          this.cambiandoContrasena.set(false);
+          this.detector.markForCheck();
         }),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((resultado) => {
-        if (resultado === undefined) {
-          return;
-        }
-        this.contrasenaCreada.set(true);
-        this.intentoContrasena.set(false);
-        this.formularioContrasena.reset({ contrasena: '', confirmarContrasena: '' });
-        const perfilActual = this.perfil();
-        if (perfilActual) {
-          this.perfil.set({ ...perfilActual, puedeCrearContrasena: false });
-        }
+      .subscribe({
+        next: () => {
+          this.contrasenaCambiada.set(true);
+          this.intentoCambioContrasena.set(false);
+          this.formularioCambioContrasena.reset({
+            contrasenaActual: '',
+            contrasena: '',
+            confirmarContrasena: '',
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          this.manejarErrorCambioContrasena(error);
+        },
       });
   }
 
@@ -290,6 +403,20 @@ export class MiPerfil implements OnInit {
 
     this.errorGuardado.set(
       respuesta?.message ?? 'No pudimos guardar tus datos. Revisa los campos marcados abajo.',
+    );
+  }
+
+  private manejarErrorCambioContrasena(error: HttpErrorResponse): void {
+    const respuesta = this.obtenerErrorApi(error);
+
+    if (respuesta?.code === 'CONTRASENA_ACTUAL_INCORRECTA') {
+      this.formularioCambioContrasena.controls.contrasenaActual.reset('');
+      this.errorCambioContrasena.set(respuesta.message ?? 'La contraseña actual no es correcta.');
+      return;
+    }
+
+    this.errorCambioContrasena.set(
+      respuesta?.message ?? 'No pudimos cambiar tu contraseña. Inténtalo nuevamente.',
     );
   }
 
